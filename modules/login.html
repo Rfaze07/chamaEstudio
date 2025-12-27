@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Ingreso al sistema</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+        <link rel="manifest" href="img/favicon/site.webmanifest">
+        <link rel="stylesheet" href="fonts/Karla.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/sweetalert2.min.css">
+        <link rel="stylesheet" href="css/login.css">
+    </head>
+    <body id="bgLogin">
+        <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+            <div class="container">
+                <div class="card login-card">
+                    <div class="row no-gutters">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <div class="row brand-wrapper justify-content-center p-3 pb-4">
+                                    <img src="img/logo.png" class="logo text-center">
+                                </div>
+                                <p class="login-card-ingreso">Ingreso al sistema</p>
+                                <form action="">
+                                    <div class="form-group">
+                                        <input type="text" id="txtUser" class="form-control" placeholder="Usuario">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input type="password" id="txtPass" class="form-control" placeholder="Contraseña">
+                                    </div>
+                                    <button type="button" class="btn btn-ingreso btn-block" id="btnIngresar" onclick="Login()">Ingresar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+        <script type="text/javascript">
+            $(document).on('keydown', function(e) {
+                if (e.which == 13) {
+                    Login()
+                    e.preventDefault()
+                }
+            })
+
+            const Login = async () => {
+				$('#btnIngresar').attr('disabled', true)
+				$('#btnIngresar').html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Ingresando...`)
+				let res = await $.post('/login', {user: $('#txtUser').val(), pass: $('#txtPass').val()})
+				console.log(res)
+				if(res.status){
+					window.location = 'inicio'
+				}else{
+					$('#btnIngresar').attr('disabled', false)
+					$('#btnIngresar').html(`<button type="button" class="btn btn-ingreso btn-block" id="btnIngresar" onclick="Login()">Ingresar</button>`)
+					Swal.fire(res.title, res.text, res.icon)
+				}
+            }
+
+        </script>
+    </body>
+</html>
