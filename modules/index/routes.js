@@ -2,7 +2,7 @@ const router = require("express").Router()
 const mw = require("../../middlewares")
 const controller = require('./controller')
 
-router.get('/', (req, res, next) => {
+router.get('/gestion', (req, res, next) => {
     if (req.session.auth)
         return res.redirect('/inicio')
     else

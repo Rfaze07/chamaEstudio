@@ -6,7 +6,6 @@ exports.getLista = async (req, res) => {
     try {
         res.render('web/index/views/index', {
             pagename: "Inicio",
-            permisos: req.session.user.permisos
         })
     }
     catch (error) {

@@ -1,7 +1,7 @@
 const model = require('./model')
 const mCargos = require('../cargos/model')
-const mProvincias = require('../provincias/model')
-const mPuestos = require('../puestos/model')
+const mProvincias = require('../modulosArchivados/provincias/model')
+const mPuestos = require('../modulosArchivados/puestos/model')
 const utils = require('../../public/js/utils')
 
 

@@ -1,5 +1,5 @@
 const model = require('./model')
-//const mEmpleados = require('../empleados/model')
+const mEmpleados = require('../empleados/model')
 const mCargos = require('../cargos/model')
 const bcrypt = require('bcryptjs')
 const { validateEmail, changeToBoolean } = require("../../utils")

@@ -1774,3 +1774,32 @@ CREATE TABLE eventos_partido (
 );
 
 alter table eventos_partido add column valor int not null
+
+
+CREATE TABLE `empleados` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nro_legajo` int DEFAULT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `apellido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `dni` int DEFAULT NULL,
+  `cuil` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `fecha_nac` date DEFAULT NULL COMMENT 'fecha de nacimiento',
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `fecha_alta` date DEFAULT NULL,
+  `fecha_baja` date DEFAULT NULL,
+  `id_cargo_fk` int DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TABLE `cargos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `desc_corta` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `editable` tinyint(1) DEFAULT '1' COMMENT 'si se puede modificar (IDs: de 1 hasta 5 NO PERMITIDO)',
+  `activo` tinyint(1) DEFAULT '1',
+  `nivel` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

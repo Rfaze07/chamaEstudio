@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - Torneo Acercamiento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50 0%, #3498db 100%);
+        }
+        .navbar-brand, .nav-link, .btn-gestion {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link.active {
+            text-decoration: underline;
+        }
+        .bienvenida {
+            margin-top: 80px;
+            text-align: center;
+        }
+        .bienvenida h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        .bienvenida p {
+            font-size: 1.3rem;
+            color: #f1c40f;
+        }
+    </style>
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Torneo Acercamiento</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#equipos">Equipos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#noticias">Noticias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#partidos">Partidos</a>
+                </li>
+            </ul>
+            <a href="/gestion" class="btn btn-warning btn-gestion ml-auto">Sistema de Gestión</a>
+        </div>
+    </nav>
+    <div class="section" style="margin-top: 80px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
