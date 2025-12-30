@@ -6,17 +6,140 @@
 {% block styles %}
 
 <style>
+    .card-equipo {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  transition: box-shadow 0.25s ease;
+  height: 100%;
+}
+
+.card-equipo:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+}
+
+.equipo-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.equipo-nombre {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Tabla de jugadores */
+.tabla-jugadores {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.tabla-jugadores th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  border-bottom: 2px solid #000;
+  padding-bottom: 6px;
+}
+
+.tabla-jugadores td {
+  padding: 8px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-jugadores td:first-child {
+  font-weight: 700;
+  width: 50px;
+}
+
+.tabla-jugadores tr:last-child td {
+  border-bottom: none;
+}
+.modulo-presentacion {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #555;
+  max-width: 780px;
+  margin: 10px auto 0 auto;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .modulo-presentacion {
+    font-size: 0.9rem;
+    padding: 0 12px;
+  }
+}
+h2.m-0 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  h2.m-0 {
+    font-size: 1.6rem;
+  }
+}
+
+
+
     
 </style>
 {% endblock %}
 
 
 {% block content %}
-    
-    <h2 class="m-0">{{ pagename }}</h2>
-    <p>Aca hay que listar los equipos en cards, con el nombre y los jugadores con sus dorsales</p>
+
+<h2 class="m-0">{{ pagename }}</h2>
+<h4 class="modulo-presentacion">
+  Conocé todos los equipos del torneo, sus planteles y la información más 
+  relevante de cada jugador. Explora la competencia de manera clara y detallada.
+</h4>
+
+<div class="container my-5">
+  <div class="row g-4">
+
+    <!-- CARD 1 -->
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card-equipo">
+        <div class="equipo-body">
+          <h5 class="equipo-nombre">Reju 2.1</h5>
+          <table class="tabla-jugadores">
+            <thead>
+              <tr>
+                <th>Dorsal</th>
+                <th>Jugador</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Juan Pérez</td></tr>
+              <tr><td>7</td><td>Matías Gómez</td></tr>
+              <tr><td>10</td><td>Lucas Fernández</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</div>
 
 {% endblock %}
+
 
 
 
