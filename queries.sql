@@ -1803,3 +1803,13 @@ CREATE TABLE `cargos` (
   `nivel` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE noticias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    subtitulo VARCHAR(200) NOT NULL,
+    fecha date not null,
+    descripcion TEXT NOT NULL,
+    path_foto varchar(300) DEFAULT NULL
+);

@@ -52,6 +52,7 @@ app.use(require("./modules/usuarios/routes"));
 app.use(require("./modules/equipos/routes"));
 app.use(require("./modules/jugadores/routes"));
 app.use(require("./modules/partidos/routes"));
+app.use(require("./modules/noticias/routes"));
 
 
 app.use(require("./modules/web/index/routes"));
