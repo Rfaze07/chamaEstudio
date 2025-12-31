@@ -30,10 +30,10 @@ exports.getByIdAjax = async (req, res) => {
     try {
         let id = req.body.id
         let data = await model.getById(id)
-        return res.json({ status: 1, data })
+        return res.json({ status: true, data })
     } catch (error) {
         console.log(error)
-        return res.json({ status: 0, type: 'error', text: 'Error del servidor' })
+        return res.json({ status: false, type: 'error', text: 'Error del servidor' })
     }
 }
 
@@ -41,46 +41,44 @@ exports.alta = async (req, res) => {
     try {
         
         if (!req.body.titulo || req.body.titulo.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'El título es obligatorio' })
+            return res.json({ status: false, type: 'error', text: 'El título es obligatorio' })
         }
         if (!req.body.subtitulo || req.body.subtitulo.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'El subtítulo es obligatorio' })
+            return res.json({ status: false, type: 'error', text: 'El subtítulo es obligatorio' })
         }
         if (!req.body.descripcion || req.body.descripcion.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'La descripción es obligatoria' })
+            return res.json({ status: false, type: 'error', text: 'La descripción es obligatoria' })
         }
         let result = await model.insert(req.body)
         if (result.status === 0) {
-            return res.json({ status: 0, type: 'error', text: result.text })
+            return res.json({ status: false, type: 'error', text: result.text })
         }
-        eventos.registrarEvento(req.session.user.id, `Alta de noticia: ${req.body.titulo}`)
-        return res.json({ status: 1, type: 'success', text: 'Noticia dada de alta correctamente' })
+        return res.json({ status: true, type: 'success', text: 'Noticia dada de alta correctamente' })
     } catch (error) {
         console.log(error)
-        return res.json({ status: 0, type: 'error', text: 'Error del servidor' })
+        return res.json({ status: false, type: 'error', text: 'Error del servidor' })
     }
 }
 
 exports.modificar = async (req, res) => {
     try {
         if (!req.body.titulo || req.body.titulo.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'El título es obligatorio' })
+            return res.json({ status: false, type: 'error', text: 'El título es obligatorio' })
         }
         if (!req.body.subtitulo || req.body.subtitulo.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'El subtítulo es obligatorio' })
+            return res.json({ status: false, type: 'error', text: 'El subtítulo es obligatorio' })
         }
         if (!req.body.descripcion || req.body.descripcion.trim() === '') {
-            return res.json({ status: 0, type: 'error', text: 'La descripción es obligatoria' })
+            return res.json({ status: false, type: 'error', text: 'La descripción es obligatoria' })
         }
         let result = await model.update(req.body)
         if (result.status === 0) {
-            return res.json({ status: 0, type: 'error', text: result.text })
+            return res.json({ status: false, type: 'error', text: result.text })
         }
-        eventos.registrarEvento(req.session.user.id, `Modificación de noticia: ${req.body.titulo}`)
-        return res.json({ status: 1, type: 'success', text: 'Noticia modificada correctamente' })
+        return res.json({ status: true, type: 'success', text: 'Noticia modificada correctamente' })
     } catch (error) {
         console.log(error)
-        return res.json({ status: 0, type: 'error', text: 'Error del servidor' })
+        return res.json({ status: false, type: 'error', text: 'Error del servidor' })
     }
 }
 
@@ -89,17 +87,16 @@ exports.eliminar = async (req, res) => {
         let id = req.body.id
         let noticia = await model.getById(id)
         if (noticia.status === 0) {
-            return res.json({ status: 0, type: 'error', text: 'Noticia no encontrada' })
+            return res.json({ status: false, type: 'error', text: 'Noticia no encontrada' })
         }
         let result = await model.delete(id)
         if (result.status === 0) {
-            return res.json({ status: 0, type: 'error', text: result.text })
+            return res.json({ status: false, type: 'error', text: result.text })
         }
-        eventos.registrarEvento(req.session.user.id, `Eliminación de noticia: ${noticia.data.titulo}`)
-        return res.json({ status: 1, type: 'success', text: 'Noticia eliminada correctamente' })
+        return res.json({ status: true, type: 'success', text: 'Noticia eliminada correctamente' })
     }
     catch (error) {
         console.log(error)
-        return res.json({ status: 0, type: 'error', text: 'Error del servidor' })
+        return res.json({ status: false, type: 'error', text: 'Error del servidor' })
     }
 }

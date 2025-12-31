@@ -166,3 +166,15 @@ exports.postRegistrarEstadistica = async (req, res) => {
         return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" });
     }
 }
+
+
+exports.postObtenerEstadisticas = async (req, res) => {
+    try {
+        const data = await model.getEventosByPartido(req.body.id);
+        if (!data.length) return res.json({ status: false, icon: "warning", title: "Alerta", text: "No existen registros cargados" });
+        return res.json({ status: true, data });
+    } catch (error) {
+        console.log(error);
+        return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" });
+    }
+}

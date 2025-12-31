@@ -143,35 +143,29 @@
         let html = ""
         if(res.status){
             for (let i = 0; i < res.data.length; i++) {
+                const partido = res.data[i];
+                let accionesHtml = '';
+                if (partido.estado !== 2) {
+                    accionesHtml += `<button class="btn btn-round btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Planilla Digital" onclick="AbrirPlanillaDigital(${partido.id})"><i class="fa fa-clipboard-list"></i></button>
+                    {% if permisos.m == 1 %}
+                    <button class="btn btn-round btn-sm btn-warning" data-accion="m" data-toggle="tooltip" data-placement="top" title="Modificar" onclick="ModalAccion('m',${partido.id})"><i class="fa fa-pen"></i></button>
+                    {% endif %}
+                    {% if permisos.b == 1 %}
+                    <button class="btn btn-round btn-sm btn-danger" onclick="Eliminar(${partido.id})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fa fa-trash-alt"></i></button>
+                    {% endif %}
+                    `
+                }
                 html += `
                     <tr>
                         <td>
                             <div style="display: flex; gap: 2px;">
-                                <button class="btn btn-round btn-sm btn-info" 
-                                    data-toggle="tooltip" data-placement="top" title="Planilla Digital" 
-                                    onclick="AbrirPlanillaDigital(${res.data[i].id})">
-                                    <i class="fa fa-clipboard-list"></i>
-                                </button>
-                                
-                                {% if permisos.m == 1 %}
-                                    <button class="btn btn-round btn-sm btn-warning" data-accion="m"
-                                        data-toggle="tooltip" data-placement="top" title="Modificar" onclick="ModalAccion('m',${res.data[i].id})">
-                                        <i class="fa fa-pen"></i>
-                                    </button>
-                                {% endif %}
-
-                                {% if permisos.b == 1 %}
-                                    <button class="btn btn-round btn-sm btn-danger" onclick="Eliminar(${res.data[i].id})"
-                                        data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                        <i class="fa fa-trash-alt"></i>
-                                    </button>
-                                {% endif %}
+                                ${accionesHtml}
                             </div>
                         </td>
-                        <td class='search'>${changeDateDMY(res.data[i].fecha_hora.split(' ')[0])} ${res.data[i].fecha_hora.split(' ')[1]}</td>
-                        <td>${res.data[i].equipoA} vs ${res.data[i].equipoB}</td>
-                        <td>${res.data[i].estado === 0 ? 'Sin Comenzar' : res.data[i].estado === 1 ? 'En Curso' : 'Finalizado'}</td>
-                        <td>${res.data[i].puntosA} - ${res.data[i].puntosB}</td>
+                        <td class='search'>${changeDateDMY(partido.fecha_hora.split(' ')[0])} ${partido.fecha_hora.split(' ')[1]}</td>
+                        <td>${partido.equipoA} vs ${partido.equipoB}</td>
+                        <td>${partido.estado === 0 ? 'Sin Comenzar' : partido.estado === 1 ? 'En Curso' : 'Finalizado'}</td>
+                        <td>${partido.puntosA} - ${partido.puntosB}</td>
                     </tr>`
             }
         }else{
@@ -221,8 +215,8 @@
             if (res.status != 0) {
                 $('#fecha').val(changeDateDMY(res.data.fecha_hora.split(' ')[0]))
                 $('#hora').val(res.data.fecha_hora.split(' ')[1])
-                $('#cmbEquipoA').val(res.data.id_equipoA_fk)
-                $('#cmbEquipoB').val(res.data.id_equipoB_fk)
+                $('#cmbEquipoA').selectpicker('val', res.data.id_equipoA_fk)
+                $('#cmbEquipoB').selectpicker('val', res.data.id_equipoB_fk)
                 $('#chbActivo').prop('checked', res.data.activo === 1 ? true : false)
             }
             $('#modalLabel').text('Modificar jugador')
