@@ -146,27 +146,7 @@
 <div class="container my-5">
   <div class="row g-4">
 
-    <!-- CARD 1 -->
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="card-equipo">
-        <div class="equipo-body">
-          <h5 class="equipo-nombre">Reju 2.1</h5>
-          <table class="tabla-jugadores">
-            <thead>
-              <tr>
-                <th>Dorsal</th>
-                <th>Jugador</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td>Juan Pérez</td></tr>
-              <tr><td>7</td><td>Matías Gómez</td></tr>
-              <tr><td>10</td><td>Lucas Fernández</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    
 
     
 
@@ -184,6 +164,64 @@
 {% block scripts %}
 
 <script type="text/javascript">
+
+$(document).ready(async function() {
+    getLista();
+});
+
+const getLista = async () => {
+    try {
+        $('#preloaderAPP').show();
+        const res = await $.post('/web/equipos/getLista', {});
+        if (!res.status){
+            return;
+        }
+        
+        for (let i = 0; i < res.data.length; i++) {
+            const equipo = res.data[i];
+            // Construir la card del equipo
+            const card = $(`
+                <div class="col-12 col-sm-6 col-lg-4">
+                  <div class="card-equipo">
+                    <div class="equipo-body">
+                      <h5 class="equipo-nombre">${equipo.nombre}</h5>
+                      <table class="tabla-jugadores">
+                        <thead>
+                          <tr>
+                            <th>Dorsal</th>
+                            <th>Jugador</th>
+                          </tr>
+                        </thead>
+                        <tbody id="jugadores-equipo-${equipo.id}">
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            `);
+            $('.row.g-4').append(card);
+            // Agregar los jugadores a la tabla
+            for (let j = 0; j < equipo.jugadores.length; j++) {
+                const jugador = equipo.jugadores[j];
+                const filaJugador = $(`
+                    <tr>
+                        <td>${jugador.dorsal}</td>
+                        <td>${jugador.nombre}</td>
+                    </tr>
+                `);
+                $(`#jugadores-equipo-${equipo.id}`).append(filaJugador);
+            }
+        }
+        $('#preloaderAPP').hide();
+
+
+        
+    } catch (error) {
+        console.error('Error al obtener la lista de equipos:', error);
+    } finally {
+        $('#preloaderAPP').hide();
+    }
+};
 
 </script>
 {% endblock %}

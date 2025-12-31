@@ -170,20 +170,8 @@
 </div>
 
 <div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-10">
-      <article class="card card-noticia mb-4">
-        <div class="card-body">
-        <h5 class="titulo">Titulo </h5>
-          <span class="subtitulo">Subtitulo</span>
-          
-          <p class="card-text">
-           DESCRIPCION ..
-          </p>
-
-        </div>
-      </article>
-    </div>
+  <div class="row justify-content-center" id="noticias-container">
+    
     
     <!-- repetir -->
 
@@ -199,6 +187,45 @@
 {% block scripts %}
 
 <script type="text/javascript">
+
+
+$(document).ready(async function() {
+    await getLista()
+});
+
+const getLista = async () => {
+    try {
+        $('#preloaderAPP').show();
+        const res = await $.post('/web/noticias/getLista', {});
+        if (!res.status){
+            return;
+        }
+        const noticias = res.data;
+        for (let i = 0; i < noticias.length; i++) {
+            const noticia = noticias[i];
+            const card = $(`
+            <div class="col-12 col-lg-10">
+              <article class="card card-noticia mb-4">
+                <div class="card-body">
+                <h5 class="titulo">${noticia.titulo}</h5>
+                  <span class="subtitulo">${noticia.subtitulo}</span>
+                  
+                  <p class="card-text">
+                    ${noticia.descripcion}
+                  </p>
+
+                </div>
+              </article>
+            </div>
+            `);
+            $('#noticias-container').append(card);
+        }
+        $('#preloaderAPP').hide();
+    } catch (error) {
+        console.error('Error al obtener la lista de noticias:', error);
+    }
+};
+
 
 </script>
 {% endblock %}

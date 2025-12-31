@@ -5,5 +5,6 @@ const { auth, checkAcceso } = require('../../../middlewares');
 
 
 router.get('/web/partidos', controller.getLista);
+router.post('/web/partidos/getLista', controller.getListaAjax);
 
 module.exports = router
