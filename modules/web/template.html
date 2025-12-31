@@ -110,7 +110,6 @@
   top: 50%;
   transform: translateY(-50%);
   border-radius: 0;
-  border: 1px solid #fff;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -172,7 +171,6 @@
 .menu-toggle {
   display: none;
   background: none;
-  border: 1px solid #fff;
   color: #fff;
   padding: 6px 10px;
   font-size: 1.1rem;
@@ -256,13 +254,14 @@
 <!-- Top bar -->
 <div class="nav-top d-flex align-items-center gap-2">
 
+
   <!-- Botón de inicio como imagen -->
-  <a href="/inicio" class="btn btn-inicio p-0">
+  <a href="/" class="btn btn-inicio p-0 d-flex align-items-center" style="gap: 1rem;">
     <img src="/img/logo2.png" alt="Inicio" style="height: 60px; width:auto;">
   </a>
 
   <!-- Botón hamburguesa -->
-  <button class="menu-toggle btn btn-outline-light btn-sm" aria-label="Abrir menú">
+  <button class="menu-toggle btn btn-sm" aria-label="Abrir menú">
     ☰
   </button>
 
@@ -276,6 +275,9 @@
 
   <!-- Menú -->
   <ul class="nav nav-menu">
+    <li class="nav-item">
+      <a class="nav-link active" href="/">Inicio</a>
+    </li>
     <li class="nav-item">
       <a class="nav-link active" href="/web/noticias">Noticias</a>
     </li>
