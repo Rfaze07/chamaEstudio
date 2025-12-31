@@ -26,8 +26,13 @@ exports.getAll = () => {
                 WHERE e.id_partido_fk = p.id
                 AND e.evento = 'puntos'
                 AND j.id_equipo_fk = p.id_equipoB_fk
-            ) AS puntosEquipoB
-        FROM partidos p
+            ) AS puntosEquipoB,
+            ( SELECT e.periodo
+              FROM eventos_partido e
+              WHERE e.id_partido_fk = p.id
+              ORDER BY e.periodo DESC
+              LIMIT 1) as periodoActual
+        FROM partidos p	
         LEFT JOIN equipos eA ON p.id_equipoA_fk = eA.id
         LEFT JOIN equipos eB ON p.id_equipoB_fk = eB.id
         ORDER BY p.fecha_hora ASC;

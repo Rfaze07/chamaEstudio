@@ -14,8 +14,10 @@ router.post('/partidos/modificar', auth, checkAcceso('m'), controller.postModifi
 router.post('/partidos/eliminar', auth, checkAcceso('b'), controller.postEliminar)
 router.post('/partidos/actualizarEstado', auth, checkAcceso('m'), controller.postActualizarEstado);
 
+
 // Ruta para registrar estadística individual de jugador
 
 router.post('/partidos/registrarEstadistica', auth, checkAcceso('m'), controller.postRegistrarEstadistica);
+router.post('/partidos/obtenerEstadisticas', auth, checkAcceso('c'), controller.postObtenerEstadisticas);
 
 module.exports = router

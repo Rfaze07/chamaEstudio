@@ -110,6 +110,8 @@ $(document).ready(async function() {
 const getLista = async () => {
     try {
         $('#preloaderAPP').show();
+        // Limpiar el contenedor antes de agregar nuevos partidos
+        $('#partidos-container').empty();
         const res = await $.post('/web/partidos/getLista', {});
         if (!res.status){
             return;
@@ -119,33 +121,39 @@ const getLista = async () => {
             const partido = partidos[i];
             partido.fecha = partido.fecha_hora.split(' ')[0];
             partido.hora = partido.fecha_hora.split(' ')[1];
+            partido.hora = partido.hora.slice(0,5); // Quitar segundos
             // Fecha y hora arriba
             const fechaHora = `${changeDateDMY(String(partido.fecha))} · ${partido.hora}`;
             // Estado y resultados
             let estadoHtml = '';
             let resultadoHtml = '';
+            let periodoHtml = '';
             if (partido.estado === 0) {
                 resultadoHtml = `<div class='fw-bold text-secondary' style='font-size:1.5rem;'>${partido.hora}</div>`;
-                estadoHtml =  `<div class='text-center estado-finalizado fw-semibold' style='font-size:1rem;'>Sin Comenzar</div>`;
+                estadoHtml =  `<div class='text-center fw-semibold' style='font-size:1rem;font-weight:bold'>Sin Comenzar</div>`;
             } else if (partido.estado === 1) {
                 resultadoHtml = `<div class='fw-bold estado-en-vivo' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
-                estadoHtml = `<div class='text-center estado-en-vivo fw-semibold' style='font-size:1rem;'>En Vivo</div>`;
+                estadoHtml = `<div class='text-center estado-en-vivo fw-semibold' style='font-size:1rem;'>En Vivo - ${partido.periodoActual}° Cuarto</div>`;
             } else if (partido.estado === 2) {
                 resultadoHtml = `<div class='fw-bold estado-finalizado' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
                 estadoHtml = `<div class='text-center estado-finalizado fw-semibold' style='font-size:1rem;'>Finalizado</div>`;
             }
-            // Card estilo noticias
+            // Card con equipos a los lados y resultado/hora en el centro
             const card = $(`
                 <div class="col-12 col-md-6">
                     <article class="card card-partido mb-4">
                         <div class="card-body">
-                            <h5 class="titulo">${partido.equipoA} vs ${partido.equipoB}</h5>
                             <span class="subtitulo">${fechaHora}</span>
-                            <div class="text-center mb-2">
-                                ${resultadoHtml}
-                                ${estadoHtml}
+                            <div class="row align-items-center mb-2 text-center">
+                                <div class="col-4 text-start equipoA fw-bold" style="font-size:1.1rem;">${partido.equipoA}</div>
+                                <div class="col-4">
+                                    ${resultadoHtml}
+                                    ${periodoHtml}
+                                </div>
+                                <div class="col-4 text-end equipoB fw-bold" style="font-size:1.1rem;">${partido.equipoB}</div>
                             </div>
-                            <a href="/web/partidos/detalle/${partido.id}" class="btn btn-outline-primary btn-sm mt-2">Ver Detalle</a>
+                            ${estadoHtml}
+                            <!--<a href="/web/partidos/detalle/${partido.id}" class="btn btn-outline-primary btn-sm mt-2">Ver Detalle</a>-->
                         </div>
                     </article>
                 </div>
@@ -155,7 +163,10 @@ const getLista = async () => {
         $('#preloaderAPP').hide();
     } catch (error) {
         console.error('Error al obtener la lista de partidos:', error);
+    } finally {
+        $('#preloaderAPP').hide();
     }
-}
+};
+
 </script>
 {% endblock %}

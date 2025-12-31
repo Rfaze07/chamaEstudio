@@ -38,9 +38,9 @@ exports.insert = o => {
 exports.update = o => {
     return queryMYSQL(`
         UPDATE partidos 
-        SET fecha_hora=?, id_equipoA_fk=?, id_equipoB_fk=?, activo=? 
+        SET fecha_hora=?, id_equipoA_fk=?, id_equipoB_fk=?
         WHERE id=?
-    `, [o.fecha_hora, o.id_equipoA_fk, o.id_equipoB_fk, o.activo, o.id])
+    `, [o.fecha_hora, o.id_equipoA_fk, o.id_equipoB_fk, o.id])
 }
 
 exports.delete = async id => {
@@ -72,4 +72,16 @@ exports.insertarEvento = (o) => {
         INSERT INTO eventos_partido (id_partido_fk, id_jugador_fk, evento, valor, periodo, tiempo_restante, fecha_hora) 
         VALUES (?, ?, ?, ?, ?, ?, NOW())
     `, [o.id_partido_fk, o.id_jugador_fk, o.evento, o.valor, o.periodo, o.tiempo_restante])
+}
+
+
+exports.getEventosByPartido = (id_partido_fk) => {
+    return queryMYSQL(`
+        SELECT ep.*, j.nombre AS jugador, e.nombre AS equipo
+        FROM eventos_partido ep
+        LEFT JOIN jugadores j ON ep.id_jugador_fk = j.id
+        LEFT JOIN equipos e ON j.id_equipo_fk = e.id
+        WHERE ep.id_partido_fk = ?
+        ORDER BY ep.fecha_hora ASC
+    `, [id_partido_fk])
 }

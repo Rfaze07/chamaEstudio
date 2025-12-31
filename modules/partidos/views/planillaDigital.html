@@ -316,6 +316,7 @@
             }
             </style>
             <script>
+            
             // --- DEBUG: Mostrar un Swal justo antes y después de la alerta de 5 faltas ---
             window._swalDebug = function(msg) {
                 if (typeof Swal !== 'undefined' && Swal.fire) {
@@ -508,6 +509,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+
+
+    
+
+
     // Funciones utilitarias
     const changeDateDMY = (fecha) => {
         if (!fecha) return '';
@@ -611,6 +617,8 @@
                 
                 await CargarJugadores(res.data.id_equipoA_fk, 'local');
                 await CargarJugadores(res.data.id_equipoB_fk, 'visitante');
+
+                await cargarEstadisticasPrevias(id);
                 
                 ActualizarInterfaz();
             } else {
@@ -632,6 +640,80 @@
             });
         }
         $("#preloaderAPP").hide();
+    };
+
+
+    const cargarEstadisticasPrevias = async (partidoId) => {
+        try {
+            // Asegura que la ruta sea relativa al contexto actual
+            const res = await $.post('/partidos/obtenerEstadisticas', { id: partidoId });
+            if (res.status && Array.isArray(res.data)) {
+                // Limpiar estadísticas previas
+                partidoData.estadisticas = { local: {}, visitante: {} };
+                // Mapear jugadores a equipo (por nombre)
+                const mapNombreEquipo = {};
+                if (partidoData.equipoLocal) mapNombreEquipo[partidoData.equipoLocal] = 'local';
+                if (partidoData.equipoVisitante) mapNombreEquipo[partidoData.equipoVisitante] = 'visitante';
+
+                // Variables para sumar puntos y faltas por equipo y periodo
+                let puntosEquipo = { local: 0, visitante: 0 };
+                let faltasEquipoPeriodo = { local: {}, visitante: {} };
+                let maxPeriodo = 1;
+
+                res.data.forEach(ev => {
+                    const tipo = mapNombreEquipo[ev.equipo] || null;
+                    if (!tipo) return;
+                    if (!partidoData.estadisticas[tipo][ev.id_jugador_fk]) {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk] = {
+                            puntos: 0,
+                            rebotes: 0,
+                            asistencias: 0,
+                            faltas: 0,
+                            falta_tecnica: 0,
+                            falta_antideportiva: 0
+                        };
+                    }
+                    // Sumar según evento
+                    if (ev.evento === 'puntos') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].puntos += Number(ev.valor || 0);
+                        puntosEquipo[tipo] += Number(ev.valor || 0);
+                    } else if (ev.evento === 'rebotes') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].rebotes += Number(ev.valor || 0);
+                    } else if (ev.evento === 'asistencias') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].asistencias += Number(ev.valor || 0);
+                    } else if (ev.evento === 'faltas') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].faltas += Number(ev.valor || 0);
+                        // Faltas por periodo
+                        if (!faltasEquipoPeriodo[tipo][ev.periodo]) faltasEquipoPeriodo[tipo][ev.periodo] = 0;
+                        faltasEquipoPeriodo[tipo][ev.periodo] += Number(ev.valor || 0);
+                    } else if (ev.evento === 'falta_tecnica') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].falta_tecnica += Number(ev.valor || 0);
+                    } else if (ev.evento === 'falta_antideportiva') {
+                        partidoData.estadisticas[tipo][ev.id_jugador_fk].falta_antideportiva += Number(ev.valor || 0);
+                    }
+                    // Actualizar periodo máximo
+                    if (ev.periodo && ev.periodo > maxPeriodo) maxPeriodo = ev.periodo;
+                });
+
+                // Actualizar cabecera: puntos por equipo
+                partidoData.scoreLocal = puntosEquipo.local;
+                partidoData.scoreVisitante = puntosEquipo.visitante;
+
+                // Actualizar periodo
+                partidoData.periodo = maxPeriodo;
+
+                // Faltas de equipo del último periodo
+                partidoData.faltasLocal = faltasEquipoPeriodo.local[maxPeriodo] || 0;
+                partidoData.faltasVisitante = faltasEquipoPeriodo.visitante[maxPeriodo] || 0;
+
+                // Actualizar UI
+                ActualizarInterfaz();
+                RenderizarJugadores('local');
+                RenderizarJugadores('visitante');
+            }
+        } catch (error) {
+            console.error('Error cargando estadísticas previas:', error);
+        }
     };
 
     const CargarJugadores = async (equipoId, tipo) => {
@@ -848,6 +930,8 @@
     const SiguientePeriodo = () => {
         partidoData.periodo++;
         partidoData.tiempoRestante = 600; // Reiniciar a 10 minutos
+        partidoData.faltasLocal = 0;
+        partidoData.faltasVisitante = 0;
         ActualizarInterfaz();
     };
 
