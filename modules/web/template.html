@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/css/switch.css">
     <link rel="stylesheet" href="/css/style.css"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
     html, body {
     height: 100%;
@@ -86,24 +88,83 @@
     width: 55%;
     }
 
-    .footer-portal {
-    background-color: #000;
-    color: #fff;
-    padding: 20px 0;
-    border-top: 1px solid #1a1a1a;
-    margin-top: 60px;
-    }
 
-    .footer-portal p {
-    margin: 0;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    }
+/*--------------------FOOTER----------------*/
 
-    .footer-portal small {
-    color: #bfbfbf;
-    }
-    /* Botón izquierda */
+
+.footer-portal {
+  background-color: #000;     
+  color: #fff;               
+  padding: 2rem 0 1.5rem;
+  font-size: 14px;
+}
+
+.footer-portal h6 {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #8a8a8a;
+}
+
+.footer-portal .container > * {
+  margin-bottom: 0.5rem;
+}
+
+/* Contacto */
+.footer-portal .d-flex {
+  margin-top: 0.75rem;
+}
+
+.footer-portal a {
+  color: #b5b5b5;
+  font-size: 20px;
+  margin: 0 14px;               /* separación segura */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-portal a:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Derechos */
+.footer-portal p {
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.footer-portal small {
+  font-size: 12px;
+  color: #7d7d7d;
+}
+.footer-contactos {
+  margin-top: 1rem;
+}
+.footer-contactos {
+  display: flex;
+  justify-content: center;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;        /* espacio icono - texto */
+  margin: 0 15px; /* ← separación ENTRE items */
+  color: #b5b5b5;
+  font-size: 14px;
+}
+
+.contacto-item i {
+  font-size: 18px;
+}
+
+
+
+
+
+
+/* Botón izquierda */
 .btn-inicio {
   position: absolute;
   left: 24px;
@@ -241,6 +302,10 @@
   }
 
 }
+.nav-logo {
+  height: 60px;  
+  width: auto;
+}
 
   </style>
     {% block styles %}
@@ -251,27 +316,27 @@
 <body>
 <nav class="navbar-portal">
 
-<!-- Top bar -->
-<div class="nav-top d-flex align-items-center gap-2">
+  <!-- Top bar -->
+  <div class="nav-top d-flex align-items-center gap-2">
 
+    <!-- Botón de inicio con imágenes -->
+    <a href="/" class="btn btn-inicio p-0 d-flex align-items-center gap-2">
+      <img src="/img/logo2.png" alt="Inicio" class="nav-logo">
+      <img src="/img/escudo-estrella.png" alt="Escudo" class="nav-logo">
+      <img src="/img/logo-basquet.png" alt="Básquet" class="nav-logo">
+    </a>
 
-  <!-- Botón de inicio como imagen -->
-  <a href="/" class="btn btn-inicio p-0 d-flex align-items-center" style="gap: 1rem;">
-    <img src="/img/logo2.png" alt="Inicio" style="height: 60px; width:auto;">
-  </a>
+    <!-- Botón hamburguesa -->
+    <button class="menu-toggle btn btn-sm" aria-label="Abrir menú">
+      ☰
+    </button>
 
-  <!-- Botón hamburguesa -->
-  <button class="menu-toggle btn btn-sm" aria-label="Abrir menú">
-    ☰
-  </button>
+    <!-- Botón de gestión -->
+    <a href="/gestion" class="btn btn-gestion">
+      <i class="bi bi-gear-fill fs-4"></i> 
+    </a>
 
-  <!-- Botón de gestión con engranaje sólido -->
-  <a href="/gestion" class="btn btn-gestion">
-    <i class="bi bi-gear-fill fs-4"></i> 
-  </a>
-
-</div>
-
+  </div>
 
   <!-- Menú -->
   <ul class="nav nav-menu">
@@ -300,11 +365,39 @@
 
 <footer class="footer-portal">
   <div class="container text-center">
+
+    <!-- Apartado Contacto -->
+    <div class="mb-4">
+      <h6 class="mb-2">Contacto</h6>
+
+<div class="footer-contactos d-flex justify-content-center gap-4">
+
+  <div class="contacto-item">
+    <i class="bi bi-instagram"></i>
+    <span>@le_devs</span>
+  </div>
+
+  <div class="contacto-item">
+    <i class="bi bi-envelope-fill"></i>
+    <span>ledevs27@gmail.com</span>
+  </div>
+
+</div>
+
+    </div>
+
+    <!-- Derechos -->
     <p class="mb-1">© 2026 Basquet La Emilia</p>
-    <small>Desarrollado por LE Devs</small>
-    <small>Todos los derechos reservados</small>
+    <small class="d-block">Desarrollado por LE Devs</small>
+    <small class="d-block">Todos los derechos reservados</small>
+
   </div>
 </footer>
+
+
+
+
+
 
  <script src="/js/jquery.min.js"></script>
   <!-- HIGHCHARTS -->
