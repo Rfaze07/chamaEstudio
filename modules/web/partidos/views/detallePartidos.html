@@ -2,27 +2,253 @@
 
 {% block title %}Bienvenido - Torneo Acercamiento{% endblock %}
 
-
 {% block styles %}
-
 <style>
-    
+    table th, table td {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    /* ===== TABLAS DE ESTADÍSTICAS ===== */
+    .stats-table {
+        font-size: 13px;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .stats-table th {
+        background: #1f2933;
+        color: #ffffff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 10px 6px;
+        border-bottom: 2px solid #111827;
+    }
+
+    .stats-table td {
+        background: #ffffff;
+        padding: 8px 6px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .stats-table tbody tr:hover td {
+        background-color: #f8fafc;
+    }
+
+    /* Columna jugador */
+    .stats-table td.player,
+    .stats-table th.player {
+        text-align: left;
+        font-weight: 500;
+        padding-left: 12px;
+    }
+
+    /* Número de camiseta */
+    .stats-table td.number {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    /* Puntos destacados */
+    .stats-table td.pts {
+        font-weight: 700;
+        font-size: 14px;
+        color: #111827;
+        background-color: #fef3c7;
+    }
+
+    /* Faltas */
+    .stats-table td.fouls {
+        font-weight: 600;
+    }
+    .stats-table td.fouls.max {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .stats-table {
+            font-size: 12px;
+        }
+    }
+    /* Card */
+.card-partido {
+  border: none;
+  background-color: #fff;
+}
+
+.card-partido .card-body {
+  padding: 22px;
+}
+
+/* Equipos */
+.equipo {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.equipo-a {
+  text-align: left;
+}
+
+.equipo-b {
+  text-align: right;
+}
+
+/* Resultado */
+.resultado-partido {
+  font-size: 1.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* Estados */
+.estado-en-vivo {
+  color: #28a745;
+}
+
+.estado-finalizado {
+  color: #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resultado-partido {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .resultado-partido {
+    font-size: 1.25rem;
+  }
+}
+
+
 </style>
 {% endblock %}
 
-
 {% block content %}
-    
-    <h2 class="m-0">{{ pagename }}</h2>
-    <p>Aca va el contenido culiado</p>
+
+
+<div class="container-fluid">
+
+    <!-- RESULTADO CENTRADO -->
+
+<div >
+  <article class="card card-partido">
+    <div class="card-body">
+
+      <div class="row align-items-center text-center mb-2">
+        <div class="col-4 equipo equipo-a">
+          Equipo A
+        </div>
+
+        <div class="col-4 resultado-partido estado-en-vivo">
+          45 - 38
+        </div>
+
+        <div class="col-4 equipo equipo-b">
+          Equipo B
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+
+
+    <!-- TABLAS -->
+    <div class="row">
+
+        <!-- EQUIPO A -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-center fw-bold bg-dark text-white">
+                    Equipo A
+                </div>
+
+                <div class="card-body table-responsive">
+                    <table class="table table-hover align-middle stats-table">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th class="player">Jugador</th>
+                                <th>T2</th>
+                                <th>T3</th>
+                                <th>TL</th>
+                                <th>RT</th>
+                                <th>AST</th>
+                                <th>FP</th>
+                                <th>PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="number">7</td>
+                                <td class="player">Pérez</td>
+                                <td>3/5</td>
+                                <td>1/3</td>
+                                <td>2/2</td>
+                                <td>6</td>
+                                <td>4</td>
+                                <td class="fouls">2</td>
+                                <td class="pts">11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- EQUIPO B -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header text-center fw-bold bg-secondary text-white">
+                    Equipo B
+                </div>
+
+                <div class="card-body table-responsive">
+                    <table class="table table-hover align-middle stats-table">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th class="player">Jugador</th>
+                                <th>T2</th>
+                                <th>T3</th>
+                                <th>TL</th>
+                                <th>RT</th>
+                                <th>AST</th>
+                                <th>FP</th>
+                                <th>PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="number">10</td>
+                                <td class="player">Gómez</td>
+                                <td>2/4</td>
+                                <td>0/2</td>
+                                <td>1/2</td>
+                                <td>3</td>
+                                <td>1</td>
+                                <td class="fouls max">5</td>
+                                <td class="pts">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}
 
-
-
 {% block scripts %}
-
-<script type="text/javascript">
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
