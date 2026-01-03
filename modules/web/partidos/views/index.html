@@ -151,8 +151,7 @@ const getLista = async () => {
             let resultadoHtml = '';
             let periodoHtml = '';
             if (partido.estado === 0) {
-               resultadoHtml = `<div class="resultado-partido fw-bold estado-en-vivo"> ${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
-
+                resultadoHtml = `<div class="resultado-partido fw-bold"> ${partido.hora}</div>`;
                 estadoHtml =  `<div class='text-center fw-semibold' style='font-size:1rem;font-weight:bold'>Sin Comenzar</div>`;
             } else if (partido.estado === 1) {
                 resultadoHtml = `<div class='fw-bold estado-en-vivo' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
