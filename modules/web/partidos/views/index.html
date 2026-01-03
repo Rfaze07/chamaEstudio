@@ -67,6 +67,7 @@
         .header-partidos h2 { font-size: 1.6rem; }
         .header-partidos h4 { font-size: 0.95rem; padding: 0 10px; }
         .card-partido .card-body { padding: 18px; }
+        
     }
     .estado-finalizado {
         color: #dc3545; /* rojo */
@@ -81,6 +82,27 @@
         from { opacity: 1; }
         to { opacity: 0.6; }
     }
+    .resultado-partido {
+  font-size: 1.8rem;      /* desktop */
+  white-space: nowrap;   /* nunca se corta */
+  text-align: center;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .resultado-partido {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile chico */
+@media (max-width: 425px) {
+  .resultado-partido {
+    font-size: 1.25rem;
+  }
+}
+
+
 </style>
 {% endblock %}
 
@@ -129,14 +151,20 @@ const getLista = async () => {
             let resultadoHtml = '';
             let periodoHtml = '';
             if (partido.estado === 0) {
-                resultadoHtml = `<div class='fw-bold text-secondary' style='font-size:1.5rem;'>${partido.hora}</div>`;
+               resultadoHtml = `<div class="resultado-partido fw-bold estado-en-vivo"> ${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
+
                 estadoHtml =  `<div class='text-center fw-semibold' style='font-size:1rem;font-weight:bold'>Sin Comenzar</div>`;
             } else if (partido.estado === 1) {
                 resultadoHtml = `<div class='fw-bold estado-en-vivo' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
                 estadoHtml = `<div class='text-center estado-en-vivo fw-semibold' style='font-size:1rem;'>En Vivo - ${partido.periodoActual}° Cuarto</div>`;
             } else if (partido.estado === 2) {
-                resultadoHtml = `<div class='fw-bold estado-finalizado' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
+                resultadoHtml = `
+  <div class="resultado-partido fw-bold estado-finalizado">
+    ${partido.puntosEquipoA} - ${partido.puntosEquipoB}
+  </div>
+`;
                 estadoHtml = `<div class='text-center estado-finalizado fw-semibold' style='font-size:1rem;'>Finalizado</div>`;
+                
             }
             // Card con equipos a los lados y resultado/hora en el centro
             const card = $(`

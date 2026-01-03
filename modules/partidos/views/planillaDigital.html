@@ -291,6 +291,12 @@
     /* Responsive para tablets y móviles */
     @media (max-width: 1024px) {
         .planilla-container { padding: 2px; }
+        .team-stats button {
+        display: block !important;
+        font-size: 0.5rem;
+        padding: 2px 4px;
+        margin-top: 2px;
+    }
         
         /* Encabezado ultra compacto */
         .header-scoreboard { padding: 2px 3px; margin-bottom: 2px; }
@@ -300,7 +306,6 @@
         .period-info { font-size: 0.55rem; margin-top: 0px; }
         .team-stats { font-size: 0.5rem; margin-top: 1px; }
         .team-stats div { margin: 0; line-height: 1; display: inline-block; margin-right: 5px; }
-        .team-stats button { display: none !important; } /* Ocultar botones timeout */
         .header-scoreboard .btn { font-size: 0.5rem; padding: 1px 3px; }
         .header-scoreboard .btn-xs { padding: 1px 2px; font-size: 0.5rem; }
         .header-scoreboard .row { margin-left: -2px; margin-right: -2px; }
@@ -344,7 +349,6 @@
         .period-info { font-size: 0.55rem; margin-top: 0px; }
         .team-stats { font-size: 0.5rem; margin-top: 1px; }
         .team-stats div { margin: 0; line-height: 1; display: inline-block; margin-right: 5px; }
-        .team-stats button { display: none !important; } /* Ocultar botones timeout en header */
         .header-scoreboard .btn { font-size: 0.5rem; padding: 1px 3px; }
         .header-scoreboard .btn-xs { padding: 1px 2px; font-size: 0.5rem; }
         .header-scoreboard .row { margin-left: -2px; margin-right: -2px; }
@@ -378,6 +382,13 @@
     
     /* Reducción extrema para móviles muy pequeños */
     @media (max-width: 600px) {
+        .team-stats button {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+      .team-stats button i {
+        font-size: 0.6rem;
+    }
         .planilla-container { padding: 1px; }
         
         /* Encabezado mínimo */
