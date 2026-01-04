@@ -68,6 +68,27 @@
         color: #991b1b;
     }
 
+    /* Fila de totales */
+    .stats-table tr.total-row {
+        border-top: 3px solid #1f2933;
+    }
+    .stats-table tr.total-row td {
+        background-color: #f3f4f6;
+        font-weight: 700;
+        font-size: 14px;
+        color: #111827;
+        padding: 12px 6px;
+    }
+    .stats-table tr.total-row td.player {
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .stats-table tr.total-row td.pts {
+        background-color: #fde68a;
+        font-size: 16px;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
         .stats-table {
@@ -297,8 +318,19 @@ const getLista = async () => {
         // Llenar tabla equipo A
         const tablaA = $('#tablaEquiposA tbody');
         tablaA.empty();
+        
+        let totalesA = { T2: 0, T3: 0, TL: 0, REB: 0, AST: 0, FAL: 0, PTS: 0 };
+        
         estadisticasA.forEach(jugador => {
           puntosA += parseInt(jugador.PTS);
+          totalesA.T2 += parseInt(jugador.T2) || 0;
+          totalesA.T3 += parseInt(jugador.T3) || 0;
+          totalesA.TL += parseInt(jugador.TL) || 0;
+          totalesA.REB += parseInt(jugador.REB) || 0;
+          totalesA.AST += parseInt(jugador.AST) || 0;
+          totalesA.FAL += parseInt(jugador.FAL) || 0;
+          totalesA.PTS += parseInt(jugador.PTS) || 0;
+          
             const fila = `
                 <tr>
                     <td class="number">${jugador.dorsal}</td>
@@ -314,12 +346,39 @@ const getLista = async () => {
             `;
             tablaA.append(fila);
         });
+        
+        // Agregar fila de totales para equipo A
+        const filaTotalA = `
+            <tr class="total-row">
+                <td></td>
+                <td class="player text-start">TOTALES</td>
+                <td>${totalesA.T2}</td>
+                <td>${totalesA.T3}</td>
+                <td>${totalesA.TL}</td>
+                <td>${totalesA.REB}</td>
+                <td>${totalesA.AST}</td>
+                <td>${totalesA.FAL}</td>
+                <td class="pts">${totalesA.PTS}</td>
+            </tr>
+        `;
+        tablaA.append(filaTotalA);
 
         // Llenar tabla equipo B
         const tablaB = $('#tablaEquiposB tbody');
         tablaB.empty();
+        
+        let totalesB = { T2: 0, T3: 0, TL: 0, REB: 0, AST: 0, FAL: 0, PTS: 0 };
+        
         estadisticasB.forEach(jugador => {
           puntosB += parseInt(jugador.PTS);
+          totalesB.T2 += parseInt(jugador.T2) || 0;
+          totalesB.T3 += parseInt(jugador.T3) || 0;
+          totalesB.TL += parseInt(jugador.TL) || 0;
+          totalesB.REB += parseInt(jugador.REB) || 0;
+          totalesB.AST += parseInt(jugador.AST) || 0;
+          totalesB.FAL += parseInt(jugador.FAL) || 0;
+          totalesB.PTS += parseInt(jugador.PTS) || 0;
+          
             const fila = `
                 <tr>
                     <td class="number">${jugador.dorsal}</td>
@@ -335,6 +394,22 @@ const getLista = async () => {
             `;
             tablaB.append(fila);
         });
+        
+        // Agregar fila de totales para equipo B
+        const filaTotalB = `
+            <tr class="total-row">
+                <td></td>
+                <td class="player text-start">TOTALES</td>
+                <td>${totalesB.T2}</td>
+                <td>${totalesB.T3}</td>
+                <td>${totalesB.TL}</td>
+                <td>${totalesB.REB}</td>
+                <td>${totalesB.AST}</td>
+                <td>${totalesB.FAL}</td>
+                <td class="pts">${totalesB.PTS}</td>
+            </tr>
+        `;
+        tablaB.append(filaTotalB);
 
         
         // Actualizar resultado
