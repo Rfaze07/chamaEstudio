@@ -150,6 +150,85 @@
     max-width: 100%;
   }
 }
+/*TABLAS-------------------*/
+
+
+/* CONTENEDOR */
+.tabla-posiciones {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  padding: 24px;
+}
+
+/* TÍTULO */
+.titulo-tabla {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* TABLA */
+.table-posiciones {
+  margin-bottom: 16px;
+  border: 1px solid #e5e5e5;
+}
+
+.table-posiciones thead {
+  background-color: #000;
+  color: #fff;
+}
+
+.table-posiciones th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: none;
+}
+
+.table-posiciones td {
+  font-size: 0.9rem;
+  border-top: 1px solid #eaeaea;
+}
+
+/* HOVER */
+.table-posiciones tbody tr:hover {
+  background-color: #f8f8f8;
+}
+
+/* POSICIONES */
+.pos-1 {
+  background-color: #f0f8ff;
+  font-weight: 600;
+}
+
+.pos-2 {
+  background-color: #f7f7f7;
+}
+
+/* NOTA */
+.nota-tabla {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .titulo-tabla {
+    font-size: 0.9rem;
+  }
+
+  .table-posiciones td,
+  .table-posiciones th {
+    font-size: 0.85rem;
+  }
+}
+
+
+    
+
+
+
 
 
 
@@ -163,20 +242,187 @@
 <div class="header-noticias">
   <h2 class="m-0">{{ pagename }}</h2>
   <h4>
-    Toda la información del torneo en un solo lugar:
-    resultados, partidos, equipos y las noticias más relevantes de cada fecha.
-    SeguÍ de cerca el desarrollo de la competencia y no te pierdas ningún detalle.
+    En este apartado se presentan los principales registros individuales del torneo, reflejando el rendimiento de los jugadores en las distintas facetas del juego. Los datos permiten analizar el desempeño a lo largo de la competencia y destacar a quienes se han sobresalido en cada rubro.
   </h4>
 </div>
 
 <div class="container my-5">
-  <div class="row justify-content-center" id="noticias-container">
-    
-    
-    <!-- repetir -->
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-lg-10 tabla-posiciones">
+
+      <h4 class="titulo-tabla mb-3 text-center">
+        Máximos Anotadores del Torneo
+      </h4>
+
+      <div class="table-responsive">
+        <table class="table table-posiciones text-center align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Partidos</th>
+              <th>Puntos</th>
+              <th>Prom.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pos-1">
+              <td>1</td>
+              <td>Juan Pérez</td>
+              <td>Halcones</td>
+              <td>8</td>
+              <td>156</td>
+              <td>19.5</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota-tabla mt-2 text-center">
+        * Promedio calculado en base a puntos y partidos jugados.
+      </p>
+
+    </div>
 
   </div>
 </div>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-lg-10 tabla-posiciones">
+
+      <h4 class="titulo-tabla mb-3 text-center">
+        Máximos Asistidores del Torneo
+      </h4>
+
+      <div class="table-responsive">
+        <table class="table table-posiciones text-center align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Partidos</th>
+              <th>Asistencias</th>
+              <th>Prom.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pos-1">
+              <td>1</td>
+              <td>Pedro González</td>
+              <td>Halcones</td>
+              <td>8</td>
+              <td>72</td>
+              <td>9.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota-tabla mt-2 text-center">
+        * Promedio calculado en base a asistencias y partidos jugados.
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-lg-10 tabla-posiciones">
+
+      <h4 class="titulo-tabla mb-3 text-center">
+        Máximos Reboteadores del Torneo
+      </h4>
+
+      <div class="table-responsive">
+        <table class="table table-posiciones text-center align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Partidos</th>
+              <th>Rebotes</th>
+              <th>Prom.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pos-1">
+              <td>1</td>
+              <td>Andrés Morales</td>
+              <td>Leones</td>
+              <td>8</td>
+              <td>94</td>
+              <td>11.8</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota-tabla mt-2 text-center">
+        * Promedio calculado en base a rebotes y partidos jugados.
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+
+    <div class="col-12 col-lg-10 tabla-posiciones">
+
+      <h4 class="titulo-tabla mb-3 text-center">
+        Faltas Cometidas del Torneo
+      </h4>
+
+      <div class="table-responsive">
+        <table class="table table-posiciones text-center align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Partidos</th>
+              <th>Faltas</th>
+              <th>Prom.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pos-1">
+              <td>1</td>
+              <td>Martín López</td>
+              <td>Leones</td>
+              <td>8</td>
+              <td>32</td>
+              <td>4.0</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="nota-tabla mt-2 text-center">
+        * Promedio calculado en base a faltas y partidos jugados.
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+
+
 
 
 

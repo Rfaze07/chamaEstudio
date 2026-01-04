@@ -59,6 +59,8 @@ app.use(require("./modules/web/index/routes"));
 app.use(require("./modules/web/equipos/routes"));
 app.use(require("./modules/web/partidos/routes"));
 app.use(require("./modules/web/noticias/routes"));
+app.use(require("./modules/web/lideres/routes"));/*aca */
+
 
 
 (async function () {

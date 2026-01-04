@@ -4,8 +4,8 @@ const eventos = require("../../eventos/controller")
 
 exports.getLista = async (req, res) => {
     try {
-        res.render('web/noticias/views/index', {
-            pagename: "Noticias",
+        res.render('web/lideres/views/index', {/*aca*/
+            pagename: "Lideres de estadisticas",
         })
     }
     catch (error) {
