@@ -154,15 +154,11 @@ const getLista = async () => {
                 resultadoHtml = `<div class="resultado-partido fw-bold"> ${partido.hora}</div>`;
                 estadoHtml =  `<div class='text-center fw-semibold' style='font-size:1rem;font-weight:bold'>Sin Comenzar</div>`;
             } else if (partido.estado === 1) {
-                resultadoHtml = `<div class='fw-bold estado-en-vivo' style='font-size:2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
+                resultadoHtml = `<div class='fw-bold estado-en-vivo' style='font-size: 2rem;'>${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
                 estadoHtml = `<div class='text-center estado-en-vivo fw-semibold' style='font-size:1rem;'>En Vivo - ${partido.periodoActual}° Cuarto</div>`;
                 periodoHtml = `<div class='text-center mt-2'><a href='/web/detallePartidos?id=${partido.id}' class='btn btn-outline-success btn-sm'>Ver Detalle</a></div>`;
             } else if (partido.estado === 2) {
-                resultadoHtml = `
-  <div class="resultado-partido fw-bold estado-finalizado">
-    ${partido.puntosEquipoA} - ${partido.puntosEquipoB}
-  </div>
-`;
+                resultadoHtml = `<div class="resultado-partido fw-bold estado-finalizado">${partido.puntosEquipoA} - ${partido.puntosEquipoB}</div>`;
                 estadoHtml = `<div class='text-center estado-finalizado fw-semibold' style='font-size:1rem;'>Finalizado</div>`;
                 periodoHtml = `<div class='text-center mt-2'><a href='/web/detallePartidos?id=${partido.id}' class='btn btn-outline-danger btn-sm'>Ver Detalle</a></div>`;
             }
