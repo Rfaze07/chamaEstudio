@@ -118,5 +118,10 @@ INSERT INTO menuitems (id,titulo,parent,icono,id_pantalla,orden) VALUES
 INSERT INTO pantallas (id,titulo,ayuda,activa,ruta,nivel) VALUES
 	 (1,'Usuarios','usuarios',1,'/usuarios','Administrador');
 
-
-
+--13/01
+CREATE TABLE categorias (
+id int(11) auto_increment primary key,
+desc_corta varchar(4) default null,
+descripcion varchar(40) default null,
+activo tinyint(1) default 1
+)

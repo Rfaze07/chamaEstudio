@@ -49,6 +49,10 @@ app.use(async function (req, res, next) {
 app.use(require("./modules/programador/routes"));
 app.use(require("./modules/index/routes"));
 app.use(require("./modules/usuarios/routes"));
+app.use(require("./modules/categorias/routes"));
+
+
+
 app.use(require("./modules/equipos/routes"));
 app.use(require("./modules/jugadores/routes"));
 app.use(require("./modules/partidos/routes"));
