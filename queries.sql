@@ -125,3 +125,12 @@ desc_corta varchar(4) default null,
 descripcion varchar(40) default null,
 activo tinyint(1) default 1
 )
+--14/01
+CREATE TABLE sub_Categorias (
+id int(11) auto_increment primary key,
+descripcion varchar(40) default null,
+activo tinyint(1) default 1
+);
+
+
+
