@@ -5,8 +5,8 @@ const eventos = require("../eventos/controller")
 
 exports.getLista = async (req, res) => {
     try {
-        res.render('categorias/views/index', {
-            pagename: "Categorias",
+        res.render('subCategorias/views/index', {
+            pagename: "SubCategorias",
             permisos: req.session.user.permisos
         })
     } catch (error) {
@@ -92,13 +92,6 @@ const ValidarCampos = o => {
     return new Promise((resolve, reject) => {
         if(String(o.descripcion).trim().length == 0) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción' })
         if(String(o.descripcion).trim().length >= 40) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripcion supero la cantidad permitida' })
-        if( String(o.desc_corta).trim().length == 0 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción corta' })
-        if( String(o.desc_corta).trim().length > 4 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripción corta supero la cantidad permitida' })
-        
-        //desc_corta a mayusculas
-        o.desc_corta = String(o.desc_corta).trim().toUpperCase()
-        o.activo = utils.changeToBoolean(o.activo)
-        
 
         return resolve({ status: true })
     })
