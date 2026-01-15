@@ -127,10 +127,17 @@ activo tinyint(1) default 1
 )
 --14/01
 CREATE TABLE sub_Categorias (
-id int(11) auto_increment primary key,
-descripcion varchar(40) default null,
-activo tinyint(1) default 1
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    desc_corta VARCHAR(40) NOT NULL,
+    descripcion VARCHAR(100),
+    id_categoria_fk INT NOT NULL,
+    activo TINYINT(1) DEFAULT 1,
+    CONSTRAINT fk_subcategorias_categoria
+        FOREIGN KEY (id_categoria_fk)
+        REFERENCES categorias(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+)
 
 
 

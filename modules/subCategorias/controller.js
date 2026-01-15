@@ -38,6 +38,7 @@ exports.getListaSelectAjax = async (req, res) => {
 }
 
 exports.postAlta = async (req, res) => {
+    console.log(req.body)
     try {
         const validaciones = await ValidarCampos(req.body)
         if(!validaciones.status) return res.json(validaciones)
@@ -92,6 +93,13 @@ const ValidarCampos = o => {
     return new Promise((resolve, reject) => {
         if(String(o.descripcion).trim().length == 0) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción' })
         if(String(o.descripcion).trim().length >= 40) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripcion supero la cantidad permitida' })
+        if( String(o.desc_corta).trim().length == 0 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción corta' })
+        if( String(o.desc_corta).trim().length > 4 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripción corta supero la cantidad permitida' })
+        
+        //desc_corta a mayusculas
+        o.desc_corta = String(o.desc_corta).trim().toUpperCase()
+        o.activo = utils.changeToBoolean(o.activo)
+        
 
         return resolve({ status: true })
     })
