@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", "Open Sans", sans-serif;
   color: #444444;
 }
 
@@ -13,7 +13,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", "Open Sans", sans-serif;
 }
 
 .why-us .play-btn::before {
@@ -160,7 +160,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cta .cta-btn {
-  font-family: "Raleway", sans-serif;
+  font-family: "Inter", "Raleway", sans-serif;
   text-transform: uppercase;
   font-weight: 500;
   font-size: 15px;
@@ -407,7 +407,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 36px;
   color: #0880e8;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", "Poppins", sans-serif;
   margin-bottom: 20px;
 }
 
@@ -463,7 +463,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: none;
   font-size: 14px;
   font-weight: 400;
-  font-family: "Raleway", sans-serif;
+  font-family: "Inter", "Raleway", sans-serif;
   font-weight: 600;
   transition: 0.3s;
 }
@@ -516,7 +516,7 @@ h1, h2, h3, h4, h5, h6 {
 .faq .faq-list a {
   display: block;
   position: relative;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", "Poppins", sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
@@ -10151,7 +10151,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6; } }
 
 body {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Inter", "Poppins", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
@@ -10183,7 +10183,7 @@ h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
   /* line-height: 1.5; */
   font-weight: 400;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Inter", "Poppins", Arial, sans-serif;
   color: #2d3d4c; }
 
 .ftco-section {
@@ -10249,8 +10249,8 @@ h1, h2, h3, h4, h5,
     height: 120px;
     margin: 0 auto;  */
     display: block;
-    width: 122px;
-    height: 89px;
+    width: 180px;
+    height: 132px;
     margin: 0 auto;
 }
     #sidebar .logo span {
