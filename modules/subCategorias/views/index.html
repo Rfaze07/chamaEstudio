@@ -35,8 +35,11 @@
         <thead>
             <tr>
                 <th scope="col">Acciones</th>
-                <th scope="col">Nombre </th>
+                <th scope="col">desc Corta </th>
+                <th scope="col">descripcion </th>
+                <th scope="col">Categoria </th>
                 <th scope="col">Activo</th>
+                
             </tr>
         </thead>
         <tbody></tbody>
@@ -57,7 +60,22 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-sm-12 col-md-12">
-                        <label for="descripcion">Nombre</label>
+                        <label for="id_categoria_fk">Categoría</label>
+                        <select class="form-control form-control-sm" id="id_categoria_fk" name="id_categoria_fk">
+                            <option value="">Seleccione una categoría</option>
+                            <!-- Opciones dinámicas -->
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12">
+                        <label for="desc_corta">Desc. Corta</label>
+                        <input type="text" class="form-control form-control-sm" id="desc_corta" maxlength="4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12">
+                        <label for="descripcion">Descripción</label>
                         <input type="text" class="form-control form-control-sm" id="descripcion" maxlength="40">
                     </div>
                 </div>
@@ -115,7 +133,10 @@
                                 {% endif %}
                             </div>
                         </td>
-                        <td class='search'>${res.data[i].descripcion}</td>  
+                        <td class='search'>${res.data[i].desc_corta}</td>
+                        <td class='search'>${res.data[i].descripcion}</td>
+                        <td>${res.data[i].categoria ?? '-'}</td>
+
                         <td>${res.data[i].activo === 1 ? 'Si' : 'No'}</td>
                     </tr>`
             }
@@ -129,16 +150,20 @@
 
     const Modalaccion = async (accion, id) => {
         $("#preloaderAPP").show()
+        await ObtenerCmbCategorias('id_categoria_fk')
         if (accion === 'a') {
-            $('#modalLabel').text('Nueva Sub categoría')
+            $('#modalLabel').text('Nueva sub categoría')
             $('#btnaccion').attr('onclick', `PostRegistro("a")`)
             $('#btnaccion').text('Guardar')
         }
         if (accion == 'm') {
             let res = await $.post(`/subCategorias/getByIdAjax`, {id})
             if (res.status != 0) {
+                $('#desc_corta').val(res.data.desc_corta)
                 $('#descripcion').val(res.data.descripcion)
                 $('#chbActivo').prop('checked', res.data.activo === 1 ? true : false)
+                $('#id_categoria_fk').val(res.data.id_categoria_fk)
+                $('#id_categoria_fk').selectpicker('refresh')
             }
             $('#modalLabel').text('Modificar categoría')
             $('#btnaccion').text('Guardar')
@@ -149,11 +174,15 @@
         $("#preloaderAPP").hide()
         $('#modal').modal('show')
     }
+    
 
     const PostRegistro = async (accion, Id) => {
         $("#preloaderAPP").show()
+        
         let url = '/subCategorias/alta',
             body = {
+                id_categoria_fk: $('#id_categoria_fk').val(),
+                desc_corta: $('#desc_corta').val(),
                 descripcion: $('#descripcion').val(),
             }
 
@@ -231,6 +260,9 @@
         $('input[type="checkbox"]').prop('checked', false)
         $('input[type="radio"]').prop('checked', false)
     }
+
+
+
 
 </script>
 {% endblock %}
