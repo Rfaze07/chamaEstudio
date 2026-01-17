@@ -141,3 +141,67 @@ CREATE TABLE sub_Categorias (
 
 
 
+CREATE TABLE `tipos_documentos_afip` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `codigo_afip` int DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO tipos_documentos_afip (id,descripcion,codigo_afip,activo) VALUES
+	 (1,'CUIT',80,1),
+	 (2,'CDI',87,1),
+	 (3,'CI Extranjera',91,1),
+	 (4,'Pasaporte',94,1),
+	 (5,'DNI',96,1),
+	 (6,'Otro',99,1);
+
+
+   CREATE TABLE `condiciones_iva` (
+  `id` smallint NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(80) COLLATE utf8mb4_general_ci NOT NULL,
+  `codigo_afip` int DEFAULT NULL,
+  `A_M` tinyint(1) DEFAULT '0',
+  `B` tinyint(1) DEFAULT '0',
+  `C` tinyint(1) DEFAULT '0',
+  `activo` tinyint(1) DEFAULT '1',
+  `usar_dni` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO condiciones_iva (id,descripcion,codigo_afip,A_M,B,C,activo,usar_dni) VALUES
+	 (1,'Resp. Inscripto',1,1,0,1,1,0),
+	 (2,'Resp. No Inscri.',2,0,0,0,0,0),
+	 (3,'No Responsable',3,0,0,0,0,0),
+	 (4,'Exento',4,0,1,1,1,0),
+	 (5,'Consumidor Final',5,0,1,1,1,1),
+	 (6,'Resp.Monotributo',6,1,0,1,1,0),
+	 (7,'Sujeto No Categorizado',7,0,1,1,1,0),
+	 (8,'Proveedor del Exterior',8,0,1,1,1,0),
+	 (9,'Cliente del Exterior',9,0,1,1,1,0),
+	 (10,'IVA Liberado - Ley N° 19.640',10,0,1,1,1,0);
+INSERT INTO condiciones_iva (id,descripcion,codigo_afip,A_M,B,C,activo,usar_dni) VALUES
+	 (11,'Monotributista Social',13,1,0,1,1,0),
+	 (12,'IVA No Alcanzado',15,0,1,1,1,0),
+	 (13,'Monotributo Trabajador Independiente Promovido',16,1,0,1,1,0);
+
+
+   CREATE TABLE `clientes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `razon_social` varchar(100) DEFAULT NULL,
+  `nro_doc` varchar(13) DEFAULT NULL,
+  `id_condicioniva_fk` int DEFAULT NULL,
+  `id_localidad_fk` int DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  `mail` varchar(100) DEFAULT NULL,
+  `telefono` varchar(30) DEFAULT NULL,
+  `observaciones` varchar(5000) DEFAULT NULL,
+  `activo` tinyint DEFAULT '1',
+  `id_tipodoc_fk` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+ALTER TABLE clientes add COLUMN id_provincia_fk int(11)
