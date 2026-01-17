@@ -480,6 +480,57 @@
         .dropdown-divider {
             margin: 0.5rem 0;
         }
+
+        /* Estilos mejorados para menú */
+        #sidebar ul.components li {
+            margin-bottom: 4px;
+        }
+
+        #sidebar ul.components > li > a {
+            padding: 11px 14px;
+            border-radius: 6px;
+            transition: all 0.1s;
+            font-weight: 500;
+        }
+
+        #sidebar ul.components > li > a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            padding-left: 18px;
+        }
+
+        #sidebar ul.components > li > a i {
+            margin-right: 10px;
+            width: 22px;
+            text-align: center;
+        }
+
+        /* Submenús */
+        #sidebar ul.components ul {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 6px;
+            margin: 4px 8px 8px 8px;
+        }
+
+        #sidebar ul.components ul li {
+            margin-bottom: 0;
+        }
+
+        #sidebar ul.components ul li a {
+            padding: 7px 14px 7px 38px;
+            font-size: 0.88rem;
+            border-radius: 4px;
+            margin: 0 4px;
+            transition: all 0.1s;
+        }
+
+        #sidebar ul.components ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding-left: 42px;
+        }
+
+        #sidebar ul.components ul li a i {
+            margin-right: 8px;
+        }
     </style>
     {% block styles %}
     {% endblock %}
