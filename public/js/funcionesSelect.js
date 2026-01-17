@@ -19,6 +19,7 @@ const ObtenerCmbProvincias = selector => { // PARAMETRO SELECTOR SE PASA COMO AR
     })
 }
 
+
 const ObtenerCmbLocalidadesProvincia = (idProvincia, selector, limpioCP) => {
     return new Promise(async (resolve, reject) => {
         $("#preloaderAPP").show()
@@ -888,23 +889,25 @@ const ObtenerCmbModulos = () => {
     })
 }
 
-const ObtenerCmbTiposDocumentacion = () => {
+const ObtenerCmbTiposDocumentacion = (selector, esFiltro) => {
     return new Promise(async (resolve, reject) => {
         $("#preloaderAPP").show()
-        const res = await $.post('/tiposDocumentacion/getlistaSelectAjax')
+        const res = await $.post('/tiposDocumentosAfip/listaActivosAjaxSelect')
         if(!res.status){
             $("#preloaderAPP").hide()
             Swal.fire(res.title, res.text, res.icon)
             return resolve()
         }
         let html = '<option value="" disabled selected>Seleccione una opción...</option>'
+        if (esFiltro) html += '<option value="t" selected>Todos</option>'
         if(res.data.length > 0){
             res.data.map(el => {
-                html += `<option value="${el.id}">${el.descripcion}</option>`
+                html += `<option value="${el.id}">${el.tipoDoc}</option>`
             })
         }
-        $('#cmbTipoDocumentacion').html(html)
-        $('#cmbTipoDocumentacion').selectpicker('refresh')
+        $(`#${selector}`).html(html)
+        $(`#${selector}`).selectpicker('refresh')
+        if (esFiltro) $(`#${selector}`).selectpicker('val', 't')
         $("#preloaderAPP").hide()
         return resolve()
     })

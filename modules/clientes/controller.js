@@ -33,9 +33,14 @@ exports.getListaAjax = async (req, res) => {
     try {
         let params=[], 
             query = `
-            SELECT c.*, ci.descripcion AS descCondIvaTxt
+            SELECT c.*, ci.descripcion AS descCondIvaTxt, l.descripcion AS descLocalidadTxt, p.descripcion AS descProvinciaTxt, tda.descripcion AS tipoDoc
             FROM clientes c
-            LEFT JOIN condiciones_iva ci ON ci.id = c.id_condicioniva_fk `
+            LEFT JOIN condiciones_iva ci ON ci.id = c.id_condicioniva_fk
+            LEFT JOIN localidades l on l.id = c.id_localidad_fk
+            LEFT JOIN provincias p on p.id = l.id_provincia_fk
+            LEFT JOIN tipos_documentos_afip tda ON tda.id = c.id_tipodoc_fk
+        `
+
 
         if(req.body.activo != 't'){
             query += 'WHERE c.activo = ?'
@@ -56,15 +61,20 @@ exports.getListaAjax = async (req, res) => {
 exports.postAlta = async (req, res) => {
     try {
         if(String(req.body.razonSocial).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe ingresar la razón social' })
-        if(String(req.body.cuit).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe ingresar la CUIT' })
+        if(String(req.body.tipoDoc).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe seleccionar el tipo de documento' })
+        if(String(req.body.nroDoc).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe ingresar la CUIT' })
         if(String(req.body.condicionIva).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe seleccionar la condición de IVA' })
         if(String(req.body.direccion).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe ingresar la dirección' })
+        if(String(req.body.provincia).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe seleccionar la provincia' })
+        if(String(req.body.localidad).trim().length == 0) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe seleccionar la localidad' })
+
         if(String(req.body.mail).trim().length == 0){
             return res.json({ status: false, icon: 'error', title: 'Error', text: 'Debe ingresar el mail' })
         }else{
             if(!utils.validarMail(String(req.body.mail).trim())) 
                 return res.json({ status: false, icon: "error", title: "Error", text: "El mail ingresado no es válido. Ej.: abc@ejemplo.com" })
         }
+
         let resInsert = await model.insert(req.body)
         if(!resInsert.affectedRows) return res.json({ status: false, icon: 'error', title: 'Error', text: 'Hubo un error al procesar la solicitud' })
         res.json({ status: true, icon: 'success', title: 'Éxito', text: 'Solicitud procesada correctamente' })

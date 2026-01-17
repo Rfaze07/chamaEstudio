@@ -29,11 +29,11 @@
             <tr>
                 <th>Acciones</th>
                 <th>Razón social</th>
-                <th>CUIT</th>
+                <th>Nro. Doc.</th>
                 <th>Cond. I.V.A.</th>
                 <th>Direccion</th>
                 <th>Mail</th>
-                <th>Teléfono 1</th>
+                <th>Teléfono</th>
                 <th>Activo</th>
             </tr>
         </thead>
@@ -58,13 +58,16 @@
                         <input type="text" class="form-control form-control-sm" id="txtRazonSocial">
                     </div>
                 </div>
-                <div class="dropdown-divider"></div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <label for="txtCUIT">CUIT</label>
-                        <input type="text" class="form-control form-control-sm maskCUIT" placeholder="99-99999999-9" id="txtCUIT">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="cmbTipoDoc">Tipo Doc.</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbTipoDoc" onchange="SeleccionoTipoDoc()"></select>
                     </div>
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="nroDoc">Nro. Doc.</label>
+                        <input type="text" class="form-control form-control-sm" disabled  id="nroDoc">
+                    </div>
+                    <div class="col-sm-12 col-md-4">
                         <label for="cmbCondicionIVA">Condición de I.V.A.</label>
                         <select class="form-control form-control-sm selectpicker" id="cmbCondicionIVA">
                             <option value="" selected disabled>Seleccione una condición de IVA...</option>
@@ -74,25 +77,30 @@
                         </select>
                     </div>
                 </div>
-                <div class="dropdown-divider"></div>
                 <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="cmbProvincia">Provincia</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbProvincia" onchange="ObtenerCmbLocalidadesProvincia(this.value,'cmbLocalidad', true)"></select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="cmbLocalidad">Localidad</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbLocalidad" disabled></select>
+                    </div>
                     <div class="col-sm-12 col-md-4">
                         <label for="txtDireccion">Dirección</label>
                         <input type="text" class="form-control form-control-sm" id="txtDireccion">
                     </div>
                 </div>
-                <div class="dropdown-divider"></div>
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
                         <label for="txtMail">Mail</label>
                         <input type="email" class="form-control form-control-sm" id="txtMail">
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <label for="txtTelefono1">Teléfono 1</label>
-                        <input type="text" class="form-control form-control-sm" id="txtTelefono1" onkeypress="return soloNumeros(event)">
+                        <label for="txtTelefono">Teléfono</label>
+                        <input type="text" class="form-control form-control-sm" id="txtTelefono" onkeypress="return soloNumeros(event)">
                     </div>
                 </div>
-                <div class="dropdown-divider"></div>
                 <div class="dropdown-divider d-none" id="actionSeccionDivider"></div>
                 <div class="row d-none" id="actionSeccion">
                     <div class="col-12 row justify-content-center pt-2">
@@ -127,11 +135,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <label for="txtCUIT">CUIT</label>
-                        <input type="text" class="form-control form-control-sm maskCUIT" id="txtCUITV" disabled readonly>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="cmbTipoDocV">Tipo Doc.</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbTipoDocV" disabled readonly></select>
                     </div>
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="nroDocV">Nro. Doc.</label>
+                        <input type="text" class="form-control form-control-sm" id="nroDocV" disabled readonly>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
                         <label for="cmbCondicionIVA">Condición de I.V.A.</label>
                         <select class="form-control form-control-sm selectpicker" id="cmbCondicionIVAV" disabled readonly>
                             <option value="" selected disabled>Seleccione una condición de IVA...</option>
@@ -143,6 +155,14 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
+                        <label for="cmbProvinciaV">Provincia</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbProvinciaV" disabled readonly></select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="cmbLocalidadV">Localidad</label>
+                        <select class="form-control form-control-sm selectpicker" id="cmbLocalidadV" disabled readonly></select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
                         <label for="txtDireccionV">Dirección</label>
                         <input type="text" class="form-control form-control-sm" id="txtDireccionV" disabled readonly>
                     </div>
@@ -153,7 +173,7 @@
                         <input type="email" class="form-control form-control-sm" id="txtMailV" disabled readonly>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <label for="txtTelefono1V">Teléfono 1</label>
+                        <label for="txtTelefono1V">Teléfono</label>
                         <input type="text" class="form-control form-control-sm" id="txtTelefono1V" disabled readonly>
                     </div>
                 </div>
@@ -180,6 +200,9 @@
 <script type="text/javascript">
     
     $(document).ready(async () => {
+        await ObtenerCmbTiposDocumentacion('cmbTipoDoc', false)
+        await ObtenerCmbTiposDocumentacion('cmbTipoDocV', false)
+        await ObtenerCmbProvincias(['cmbProvincia', 'cmbProvinciaV'])
         getLista()
     })
 
@@ -189,7 +212,7 @@
 
     const getLista = async () => {
         $("#preloaderAPP").show()
-        let html = '<tr><td colspan="20">Sin registros.</td></tr>'
+        let html = '<tr><td colspan="20"><b>No se han encontrado registros</b></td></tr>'
         const res = await $.post('/clientes/listaAjax', { activo: $('#cmbActivoFiltro').val() })
         if(res.status){
             html=''
@@ -217,11 +240,11 @@
                         </div>
                     </td>
                     <td class="search">${res.data[i].razon_social}</td>
-                    <td class="search">${res.data[i].cuit}</td>
+                    <td class="search">${res.data[i].tipoDoc}: ${res.data[i].nro_doc}</td>
                     <td class="search">${res.data[i].descCondIvaTxt}</td>
                     <td class="search">${res.data[i].direccion}</td>
                     <td class="search">${res.data[i].mail}</td>
-                    <td class="search">${res.data[i].telefono1}</td>
+                    <td class="search">${res.data[i].telefono}</td>
                     <td>${res.data[i].activo === 1 ? 'Si' : 'No'}</td>
                 </tr>`
             }
@@ -253,11 +276,14 @@
     const PostRegistro = async (accion, idCliente) => {
         let body = {
             razonSocial: $('#txtRazonSocial').val(),
-            cuit: $('#txtCUIT').val(),
+            tipoDoc: $('#cmbTipoDoc').val(),
+            nroDoc: $('#nroDoc').val(),
             condicionIva: $('#cmbCondicionIVA').val(),
+            provincia: $('#cmbProvincia').val(),
+            localidad: $('#cmbLocalidad').val(),
             direccion: $('#txtDireccion').val(),
             mail: $('#txtMail').val(),
-            telefono1: $('#txtTelefono1').val()
+            telefono: $('#txtTelefono').val()
         }
         
         if (accion == 'm') {
@@ -280,37 +306,37 @@
         })
     }
 
-    // const SeleccionaProvincia = async idProvincia => {
-    //     await ActualizarLocalidad(idProvincia, false)
-    // }
+    const SeleccionaProvincia = async idProvincia => {
+        await ActualizarLocalidad(idProvincia, false)
+    }
 
-    // const ActualizarLocalidad = async (id, esVer) => {
-    //     return new Promise(async (resolve, reject) => {
-    //         let provincia = parseInt($('#cmbProvincia').val());
-    //         try {
-    //             let html='<option value="" selected disabled>Seleccione una provincia...</option>', 
-    //                 res = await $.post('/localidades/listaSelectAjax', { id })
-    //                 console.log(id)
-    //                 console.log(res)
-    //             for(let i=0; i<res.length; i++) 
-    //                 html += `<option value="${res[i].id}">${res[i].cp} - ${res[i].localidad}</option>`
+    const ActualizarLocalidad = async (id, esVer) => {
+        return new Promise(async (resolve, reject) => {
+            let provincia = parseInt($('#cmbProvincia').val());
+            try {
+                let html='<option value="" selected disabled>Seleccione una provincia...</option>', 
+                    res = await $.post('/localidades/listaSelectAjax', { id })
+                    console.log(id)
+                    console.log(res)
+                for(let i=0; i<res.length; i++) 
+                    html += `<option value="${res[i].id}">${res[i].cp} - ${res[i].localidad}</option>`
                 
-    //             if(esVer){
-    //                 $('#cmbLocalidadV').html(html)
-    //                 $('#cmbLocalidadV').selectpicker('refresh')
-    //             }else{
-    //                 console.log('entro')
-    //                 $('#cmbLocalidad').prop('disabled', false)
-    //                 $('#cmbLocalidad').html(html)
-    //                 $('#cmbLocalidad').selectpicker('refresh')
-    //             }
+                if(esVer){
+                    $('#cmbLocalidadV').html(html)
+                    $('#cmbLocalidadV').selectpicker('refresh')
+                }else{
+                    console.log('entro')
+                    $('#cmbLocalidad').prop('disabled', false)
+                    $('#cmbLocalidad').html(html)
+                    $('#cmbLocalidad').selectpicker('refresh')
+                }
                 
-    //             resolve()
-    //         } catch (error) {
-    //             reject(error)
-    //         }
-    //     })
-    // }
+                resolve()
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
 
     const Borrar = (IdCliente) => {
         Swal.fire({
@@ -348,12 +374,21 @@
 
     const CargarDatosModificar = async o => {
         $('#txtRazonSocial').val(o.razon_social)
-        $('#txtCUIT').val(o.cuit)
-        $('#cmbCondicionIVA').val(o.id_condicioniva_fk)
+        $('#cmbTipoDoc').selectpicker('val', o.id_tipodoc_fk)
+        SeleccionoTipoDoc()
+         $('#nroDoc').val(o.nro_doc)
+        $('#cmbCondicionIVA').selectpicker('val', o.id_condicioniva_fk)
+        $('#cmbProvincia').selectpicker('val', o.id_provincia_fk)
+        
+        if(o.id_provincia_fk){
+            await ObtenerCmbLocalidadesProvincia(o.id_provincia_fk, 'cmbLocalidad', true)
+            $('#cmbLocalidad').selectpicker('val', o.id_localidad_fk)
+        }
         $('#txtDireccion').val(o.direccion)
         $('#txtMail').val(o.mail)
-        $('#txtTelefono1').val(o.telefono1)
+        $('#txtTelefono').val(o.telefono)
         $('#chbActivo').prop('checked', o.activo == 1)
+
         $('.selectpicker').selectpicker('refresh')
         $('#modalClientes').modal('show')
     }
@@ -362,6 +397,9 @@
         $('input[type="text"], input[type="email"], textarea').val('')
         $('input[type="checkbox"], input[type="radio"]').prop('checked', false)
         $('select').val('0')
+        $('#nroDoc').prop('disabled', true)
+        $('#nroDoc').unmask()
+        $('#nroDoc').removeClass('maskCUIT maskDNI')
         $('#cmbLocalidad').prop('disabled', true)
         $('.selectpicker').selectpicker('refresh')
     }
@@ -371,11 +409,17 @@
         const res = await $.post('/clientes/ver', {id})
         if(res.status){
             $('#txtRazonSocialV').val(res.data.razon_social)
-            $('#txtCUITV').val(res.data.cuit)
-            $('#cmbCondicionIVAV').val(res.data.id_condicioniva_fk)
+            $('#cmbTipoDocV').selectpicker('val', res.data.id_tipodoc_fk)
+            $('#nroDocV').val(res.data.nro_doc)
+            $('#cmbCondicionIVAV').selectpicker('val', res.data.id_condicioniva_fk)
+            $('#cmbProvinciaV').selectpicker('val', res.data.id_provincia_fk)
+            if(res.data.id_provincia_fk){
+                await ObtenerCmbLocalidadesProvincia(res.data.id_provincia_fk, 'cmbLocalidadV', false)
+                $('#cmbLocalidadV').selectpicker('val', res.data.id_localidad_fk)
+            }
             $('#txtDireccionV').val(res.data.direccion)
             $('#txtMailV').val(res.data.mail)
-            $('#txtTelefono1V').val(res.data.telefono1)
+            $('#txtTelefono1V').val(res.data.telefono)
             $('#chbActivoV').prop('checked', res.data.activo == 1)
             $('.selectpicker').selectpicker('refresh')
             $("#preloaderAPP").hide()
@@ -383,6 +427,54 @@
         }else{
             $("#preloaderAPP").hide()
             Swal.fire(res.title, res.text, res.icon)
+        }
+    }
+
+    const SeleccionoTipoDoc = () => {
+        const tipoDocId = $('#cmbTipoDoc').val()
+        const tipoDocTexto = $('#cmbTipoDoc option:selected').text()
+        
+        // Limpiar el campo y remover máscaras previas
+        $('#nroDoc').val('')
+        $('#nroDoc').unmask()
+        $('#nroDoc').removeClass('maskCUIT maskDNI')
+        
+        if (!tipoDocId || tipoDocId === '') {
+            $('#nroDoc').prop('disabled', true)
+            $('#nroDoc').attr('placeholder', 'Nro. Doc.')
+            return
+        }
+        
+        // Habilitar el campo
+        $('#nroDoc').prop('disabled', false)
+        
+        // Aplicar máscara según el tipo de documento
+        switch(tipoDocTexto) {
+            case 'CUIT':
+            case 'CUIL':
+                $('#nroDoc').addClass('maskCUIT')
+                $('#nroDoc').mask('99-99999999-9')
+                $('#nroDoc').attr('placeholder', 'CUIT: 99-99999999-9')
+                break
+            case 'DNI':
+                $('#nroDoc').addClass('maskDNI')
+                $('#nroDoc').mask('99.999.999')
+                $('#nroDoc').attr('placeholder', 'DNI: 99.999.999')
+                break
+            case 'CDI':
+                $('#nroDoc').attr('placeholder', 'CDI')
+                break
+            case 'CI Extranjera':
+                $('#nroDoc').attr('placeholder', 'CI Extranjera')
+                break
+            case 'Pasaporte':
+                $('#nroDoc').attr('placeholder', 'Pasaporte')
+                break
+            case 'Otro':
+                $('#nroDoc').attr('placeholder', 'Otro documento')
+                break
+            default:
+                $('#nroDoc').attr('placeholder', tipoDocTexto)
         }
     }
 
