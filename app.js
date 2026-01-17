@@ -51,6 +51,7 @@ app.use(require("./modules/index/routes"));
 app.use(require("./modules/usuarios/routes"));
 app.use(require("./modules/categorias/routes"));
 app.use(require("./modules/subCategorias/routes"));
+app.use(require("./modules/productos/routes"));
 app.use(require("./modules/clientes/routes"));
 app.use(require("./modules/tiposDocumentosAfip/routes"));
 

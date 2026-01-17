@@ -1030,6 +1030,7 @@ const ObtenerCmbCategorias = (selector, esFiltro) => {
             return resolve()
         }
         let html = '<option value="" disabled selected>Seleccione una opción...</option>'
+        if(esFiltro) html = '<option value="t" selected>Todos</option>'
         if(res.data.length > 0){
             res.data.map(el => {
                 html += `<option value="${el.id}">${el.descripcion}</option>`
@@ -1037,6 +1038,7 @@ const ObtenerCmbCategorias = (selector, esFiltro) => {
         }
         $(`#${selector}`).html(html)
         $(`#${selector}`).selectpicker('refresh')
+        if(esFiltro) $(`#${selector}`).selectpicker('val', 't')
         $("#preloaderAPP").hide()
         return resolve()
     })

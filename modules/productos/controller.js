@@ -5,8 +5,8 @@ const eventos = require("../eventos/controller")
 
 exports.getLista = async (req, res) => {
     try {
-        res.render('subCategorias/views/index', {
-            pagename: "SubCategorias",
+        res.render('productos/views/index', {
+            pagename: "Productos",
             permisos: req.session.user.permisos
         })
     } catch (error) {
@@ -14,46 +14,22 @@ exports.getLista = async (req, res) => {
         res.redirect('/inicio')
     }
 }
+
 exports.getListaAjax = async (req, res) => {
     try {
-        const { activo, categoria } = req.body
-
-        const data = await model.getByFiltros(activo, categoria)
-
-        if (!data.length) {
-            return res.json({
-                status: false,
-                icon: "warning",
-                title: "Alerta",
-                text: "No existen registros con los filtros seleccionados"
-            })
-        }
- 
-        return res.json({ status: true, data })
-
+        let data = await model.getAll()
+        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen registros cargados" })
+        res.json({ status: true, data })
     } catch (error) {
         console.log(error)
-        return res.json({
-            status: false,
-            icon: "error",
-            title: "Error",
-            text: "Hubo un error al procesar la solicitud"
-        })
+        return res.json({ status: false, icon:"error", title: "Error", text: "Hubo un error al procesar la solicitud" })
     }
 }
 
 exports.getListaSelectAjax = async (req, res) => {
     try {
-        const { id_categoria_fk } = req.body
-        
-        let data
-        if(id_categoria_fk){
-            data = await model.getByFiltros(1, id_categoria_fk)
-        } else {
-            data = await model.getAllbyActivo(1)
-        }
-        
-        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen subcategorías cargadas" })
+        const data = await model.getAllbyActivo(1)
+        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen productos cargados" })
         return res.json({ status: true, data })
     } catch (error) {
         console.log(error)
@@ -62,14 +38,13 @@ exports.getListaSelectAjax = async (req, res) => {
 }
 
 exports.postAlta = async (req, res) => {
-    console.log(req.body)
     try {
         const validaciones = await ValidarCampos(req.body)
         if(!validaciones.status) return res.json(validaciones)
 
         let resInsert = await model.insert(req.body)
         if(!resInsert.affectedRows) return res.json({ status: false, icon:"error", title: "Error", text: "Hubo un error al procesar la solicitud" })
-        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Rubros", acc: "a", registro: resInsert.insertId })
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Productos", acc: "a", registro: resInsert.insertId })
         res.json({ status: true, icon:"success", title: "Éxito", text: "Solicitud procesada correctamente" })
     } catch (error) {
         console.log(error)
@@ -90,7 +65,7 @@ exports.postModificar = async (req, res) => {
 
         let result = await model.update(req.body)
         if(result.affectedRows == 0) return res.json({ status: false, icon:'error', title: "Error", text: "Hubo un error al procesar la solicitud" })
-        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Rubros", acc: "m", registro: req.body.id })
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Productos", acc: "m", registro: req.body.id })
         return res.json({ status: true, icon: "success", title: "Éxito", text: "Solicitud procesada correctamente" })
     } catch (error) {
         console.log(error)
@@ -100,12 +75,9 @@ exports.postModificar = async (req, res) => {
 
 exports.postEliminar = async (req, res) => {
     try {
-
-        //Validar que no tenga subcategoria asociadas , a futuro
-
         let result = await model.delete(req.body.id)
         if(result.affectedRows == 0) return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" })
-        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Rubros", acc: "b", registro: req.body.id })            
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Productos", acc: "b", registro: req.body.id })            
         return res.json({ status: true, icon: "success", title: "Éxito", text: "Solicitud procesada correctamente" })
     } catch (error) {
         console.log(error)
@@ -115,15 +87,19 @@ exports.postEliminar = async (req, res) => {
 
 const ValidarCampos = o => {
     return new Promise((resolve, reject) => {
-        if(String(o.descripcion).trim().length == 0) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción' })
-        if(String(o.descripcion).trim().length >= 40) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripcion supero la cantidad permitida' })
-        if( String(o.desc_corta).trim().length == 0 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar la descripción corta' })
-        if( String(o.desc_corta).trim().length > 4 ) return res.json({ status: false, icon:'error', title: 'Error', text: 'La descripción corta supero la cantidad permitida' })
+        if(String(o.codigo).trim().length == 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar el código' })
+        if(String(o.codigo).trim().length > 50) return resolve({ status: false, icon:'error', title: 'Error', text: 'El código supera la cantidad permitida' })
+        if(String(o.nombre).trim().length == 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar el nombre' })
+        if(String(o.nombre).trim().length > 150) return resolve({ status: false, icon:'error', title: 'Error', text: 'El nombre supera la cantidad permitida' })
+        if(!o.id_subcategoria_fk || o.id_subcategoria_fk == 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe seleccionar una subcategoría' })
+        if(!o.precio || parseFloat(o.precio) <= 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar un precio válido' })
         
-        //desc_corta a mayusculas
-        o.desc_corta = String(o.desc_corta).trim().toUpperCase()
+        // Conversiones
         o.activo = utils.changeToBoolean(o.activo)
-        
+        o.activo_ecommerce = utils.changeToBoolean(o.activo_ecommerce)
+        o.precio = parseFloat(o.precio)
+        o.porc_ecommerce = o.porc_ecommerce ? parseFloat(o.porc_ecommerce) : null
+        o.path_foto = o.path_foto || null
 
         return resolve({ status: true })
     })
