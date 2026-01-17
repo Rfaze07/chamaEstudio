@@ -172,6 +172,314 @@
         .table-row-rojo:hover {
             background-color: #ffcdd2 !important;
         }
+
+        /* ========== ESTILOS MODERNOS PARA GESTIÓN ========== */
+        
+        /* Títulos mejorados */
+        h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #175676 0%, #fe7f00 100%);
+            border-radius: 2px;
+        }
+
+        /* Tablas mejoradas */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #0f3d54 0%, #175676 50%, #1a6b8f 100%);
+            color: #ffffff;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            padding: 16px 14px;
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            border-bottom: 3px solid #fe7f00;
+        }
+
+        .table thead th:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table thead th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .table thead th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .table tbody td {
+            padding: 12px;
+            vertical-align: middle;
+            color: #495057;
+            font-size: 0.875rem;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fb;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+        }
+
+        /* Botones mejorados */
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #175676 0%, #1a6b8f 100%);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1a6b8f 0%, #175676 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            color: #fff;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333 0%, #dc3545 100%);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        }
+
+        .btn-info:hover {
+            background: linear-gradient(135deg, #138496 0%, #17a2b8 100%);
+        }
+
+        .btn-round {
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        /* Cards mejorados */
+        .card {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background: #ffffff;
+        }
+
+        /* Inputs y selects mejorados */
+        .form-control, .selectpicker {
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #175676;
+            box-shadow: 0 0 0 0.2rem rgba(23, 86, 118, 0.15);
+        }
+
+        .form-control-sm {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        /* Modales mejorados */
+        .modal-header {
+            background: linear-gradient(135deg, #175676 0%, #1a6b8f 100%);
+            color: white;
+            border-radius: 0;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .modal-header .close {
+            color: white;
+            opacity: 0.9;
+            text-shadow: none;
+        }
+
+        .modal-header .close:hover {
+            opacity: 1;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+            padding: 1rem 1.5rem;
+        }
+
+        /* Badges mejorados */
+        .badge {
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* Scrollbar personalizado */
+        .table-responsive::-webkit-scrollbar,
+        .tableFixHead::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track,
+        .tableFixHead::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb,
+        .tableFixHead::-webkit-scrollbar-thumb {
+            background: #175676;
+            border-radius: 4px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb:hover,
+        .tableFixHead::-webkit-scrollbar-thumb:hover {
+            background: #1a6b8f;
+        }
+
+        /* Animaciones suaves */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Mejora para los filtros */
+        label {
+            font-weight: 500;
+            color: #495057;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Acciones en tablas - grupo de botones */
+        .table tbody td:first-child {
+            width: 120px;
+        }
+
+        /* Dropdown mejorado */
+        .dropdown-menu {
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #175676;
+            transform: translateX(5px);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+        }
     </style>
     {% block styles %}
     {% endblock %}
