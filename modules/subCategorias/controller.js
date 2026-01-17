@@ -14,15 +14,31 @@ exports.getLista = async (req, res) => {
         res.redirect('/inicio')
     }
 }
-
 exports.getListaAjax = async (req, res) => {
     try {
-        let data = await model.getAll()
-        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen registros cargados" })
-        res.json({ status: true, data })
+        const { activo, categoria } = req.body
+
+        const data = await model.getByFiltros(activo, categoria)
+
+        if (!data.length) {
+            return res.json({
+                status: false,
+                icon: "warning",
+                title: "Alerta",
+                text: "No existen registros con los filtros seleccionados"
+            })
+        }
+ 
+        return res.json({ status: true, data })
+
     } catch (error) {
         console.log(error)
-        return res.json({ status: false, con:"", title: "Error", text: "Hubo un error al procesar la solicitud" })
+        return res.json({
+            status: false,
+            icon: "error",
+            title: "Error",
+            text: "Hubo un error al procesar la solicitud"
+        })
     }
 }
 

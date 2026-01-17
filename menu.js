@@ -2,7 +2,7 @@ const fs = require('fs');
 const database = require('./database');
 
 //ESTA VARIABLE MANTIENE EL MENÚ HTML EN MEMORIA, PARA EVITAR SER CONSULTADO EN LA DB
-//CON CADA REQUEST QUE HAGA EL USER.
+//CON CADA REQUEST QUE HAGA EL USER. 
 //SE LLENA CON LA FUNCION loadMenuHTML CON LA PRIMER LLAMADA A getMenuHTML
 //o cuando se edita algún elemento del menú desde la seccion de programador.
 let menu_html = null;

@@ -60,6 +60,7 @@ app.use(require("./modules/localidades/routes"));
 
 
 
+
 app.use(require("./modules/equipos/routes"));
 app.use(require("./modules/jugadores/routes"));
 app.use(require("./modules/partidos/routes"));
