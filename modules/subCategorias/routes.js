@@ -12,3 +12,4 @@ router.post('/subCategorias/modificar', auth, checkAcceso('m'), controller.postM
 router.post('/subCategorias/eliminar', auth, checkAcceso('b'), controller.postEliminar);
 
 module.exports = router;
+ 

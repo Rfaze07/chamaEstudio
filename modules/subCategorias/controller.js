@@ -28,7 +28,7 @@ exports.getListaAjax = async (req, res) => {
                 text: "No existen registros con los filtros seleccionados"
             })
         }
-
+ 
         return res.json({ status: true, data })
 
     } catch (error) {

@@ -66,7 +66,7 @@ exports.getByDesc = async desc => {
         select c.*
         FROM sub_Categorias c 
         where c.descripcion = ?
-    `, [desc])
+    `, [desc]) 
 }
 
 exports.insert = o => {
