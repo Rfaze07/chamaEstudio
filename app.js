@@ -55,6 +55,7 @@ app.use(require("./modules/subCategorias/routes"));
 
 
 
+
 app.use(require("./modules/equipos/routes"));
 app.use(require("./modules/jugadores/routes"));
 app.use(require("./modules/partidos/routes"));

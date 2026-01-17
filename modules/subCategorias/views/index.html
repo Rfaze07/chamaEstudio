@@ -16,6 +16,13 @@
     <div class="d-flex align-items-end mb-3" style="gap: 0.2rem;">
         <input type="text" class="form-control form-control-sm" id="txtFiltro" placeholder="Buscar" style="width: 10rem;" />
         <div>
+            <label>Categoría</label>
+            <select class="form-control form-control-sm" id="cmbCategoriaFiltro" onchange="getLista()">
+                <option value="t" selected>Todas las categorías</option>
+            </select>
+        </div>
+
+        <div>
             <label>Activos</label>
             <select class="form-control form-control-sm" id="cmbActivoFiltro" onchange="getLista()">
                 <option value="t" selected>Todos</option>
@@ -100,9 +107,18 @@
 
 {% block scripts %}
 <script>
-    $(document).ready(async () => {
-        getLista()
-    })
+$(document).ready(async () => {
+
+    await ObtenerCmbCategorias('cmbCategoriaFiltro')
+
+    // Agregamos "Todas las categorías" arriba
+    $('#cmbCategoriaFiltro')
+        .prepend('<option value="t">Todas las categorías</option>')
+
+    $('#cmbCategoriaFiltro').selectpicker('refresh')
+
+    getLista()
+})
 
     $("#txtFiltro").keyup(async function () {
         Filtrar()
@@ -110,7 +126,9 @@
     
     const getLista = async () => {
         $("#preloaderAPP").show()
-        const res = await $.post('/subCategorias/getListaAjax', { activo: $('#cmbActivoFiltro').val()})
+        const res = await $.post('/subCategorias/getListaAjax', 
+        { activo: $('#cmbActivoFiltro').val(),
+        categoria: $('#cmbCategoriaFiltro').val()})
         let html = ""
         if(res.status){
             for (let i = 0; i < res.data.length; i++) {

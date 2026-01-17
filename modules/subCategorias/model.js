@@ -18,8 +18,11 @@ exports.getAll = () => {
 
 exports.getAllbyActivo = a => {
     return queryMYSQL(`
-        SELECT c.*
+        SELECT 
+            c.*,
+            sc.descripcion AS categoria
         FROM sub_Categorias c
+        LEFT JOIN categorias sc ON sc.id = c.id_categoria_fk
         WHERE c.activo = ?
         ORDER BY c.descripcion
     `, [a])
@@ -32,7 +35,32 @@ exports.getById = id => {
         WHERE c.id = ?
     `, [id])
 }
+exports.getByFiltros = (activo, categoria) => {
+    let where = []
+    let params = []
 
+    if (activo !== 't') {
+        where.push('c.activo = ?')
+        params.push(activo)
+    }
+
+    if (categoria !== 't') {
+        where.push('c.id_categoria_fk = ?')
+        params.push(categoria)
+    }
+
+    const whereSQL = where.length ? `WHERE ${where.join(' AND ')}` : ''
+
+    return queryMYSQL(`
+        SELECT 
+            c.*,
+            sc.descripcion AS categoria
+        FROM sub_Categorias c
+        LEFT JOIN categorias sc ON sc.id = c.id_categoria_fk
+        ${whereSQL}
+        ORDER BY c.descripcion
+    `, params)
+}
 exports.getByDesc = async desc => {
     return queryMYSQL(`
         select c.*
