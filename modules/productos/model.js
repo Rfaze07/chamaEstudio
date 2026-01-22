@@ -62,3 +62,47 @@ exports.delete = async id => {
         WHERE id = ?
     `, [id])
 }
+
+
+
+//------------------  COLORES  ------------------//
+
+exports.getColoresByProductoId = id_producto_fk => {
+    return queryMYSQL(`
+        SELECT * 
+        FROM colores_productos
+        WHERE id_producto_fk = ?
+        ORDER BY descripcion
+    `, [id_producto_fk])
+}
+
+exports.getColorById = id => {
+    return queryMYSQL(`
+        SELECT *
+        FROM colores_productos
+        WHERE id = ?
+    `, [id])
+}
+
+exports.insertColor = o => {
+    return queryMYSQL(`
+        INSERT INTO colores_productos (id_producto_fk, descripcion, codigo_hexa) 
+        VALUES (?, ?, ?)
+    `, [o.id_producto_fk, o.descripcion, o.codigo_hexa])
+}
+
+exports.updateColor = o => {
+    return queryMYSQL(`
+        UPDATE colores_productos
+        SET descripcion=?, codigo_hexa=?
+        WHERE id=?
+    `, [o.descripcion, o.codigo_hexa, o.id])
+}
+
+exports.deleteColor = id => {
+    return queryMYSQL(`
+        DELETE FROM colores_productos
+        WHERE id = ?
+    `, [id])
+}
+//------------------  FIN COLORES  ------------------//

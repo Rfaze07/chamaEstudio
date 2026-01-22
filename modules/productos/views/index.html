@@ -129,6 +129,78 @@
     </div>
 </div>
 
+
+<!-- MODAL COLORES-->
+ <div class="modal fade" id="modalColores" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelColores">Colores del Producto</h5>
+                <button type="button" class="close" aria-label="Close" onclick="CerrarModalColores()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end mb-3">
+                        <button class="btn btn-sm btn-round btn-success modalaccion mr-1 mb-3" data-accion="a" onclick='modalAccionColor("a", _idColorSelec)'>
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive" style="height: calc(100vh - 300px)" id="tablaDatosColores">
+                    <table class="table table-sm table-fix table-hover tableFixHead">
+                        <thead>
+                            <tr>
+                                <th scope="col">Acciones</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Código hexa</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="CerrarModalColores()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--FIN MODAL COLORES-->
+
+<!-- MODAL AGREGAR COLORES-->
+    <div class="modal fade" id="modalAccionColor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabelAccionColor"></h5>
+                    <button type="button" class="close" aria-label="Close" onclick="CerrarModalAccionColor()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label for="txtDescripcionColor">Descripcion</label>
+                            <input type="text" class="form-control form-control-sm" id="txtDescripcionColor" maxlength="40">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="txtCodigohexa">Color</label>
+                            <input type="color" id="color" name="color">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="CerrarModalAccionColor()">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnaccionColor">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block scripts %}
@@ -195,6 +267,10 @@
                         <td>
                             <div style="display: flex; gap: 2px;">
                                 {% if permisos.m == 1 %}
+                                    <button class="btn btn-round btn-sm btn-info" data-accion="m"
+                                        data-toggle="tooltip" data-placement="top" title="Colores" onclick="modalColores(${res.data[i].id})">
+                                        <i class="fa fa-palette"></i>
+                                    </button>
                                     <button class="btn btn-round btn-sm btn-warning" data-accion="m"
                                         data-toggle="tooltip" data-placement="top" title="Modificar" onclick="Modalaccion('m',${res.data[i].id})">
                                         <i class="fa fa-pen"></i>
@@ -357,5 +433,144 @@
         $('#id_subcategoria_fk').selectpicker('refresh')
     }
 
+    //========================COLORES========================//
+
+    const modalColores = async (id) => {
+        _idColorSelec = id;
+        let html = "";
+        try {
+            const colores = await $.post('/productos/getColoresByProductoIdAjax', { id_producto_fk: id });
+            if (colores.status) {
+                for (let i = 0; i < colores.data.length; i++) {
+                    html += `
+                        <tr>
+                            <td>
+                                <div style="display: flex; gap: 2px;">
+                                    {% if permisos.m == 1 %}
+                                        <button class="btn btn-round btn-sm btn-warning" data-accion="m"
+                                            data-toggle="tooltip" data-placement="top" title="Modificar" onclick="modalAccionColor('m',${colores.data[i].id})">
+                                            <i class="fa fa-pen"></i>
+                                        </button>
+                                    {% endif %}
+                                    {% if permisos.b == 1 %}
+                                        <button class="btn btn-round btn-sm btn-danger" onclick="EliminarColor(${colores.data[i].id})"
+                                            data-toggle="tooltip" data-placement="top" title="Eliminar">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class='search'>${colores.data[i].descripcion}</td>
+                            <td>
+                                <div style="width: 30px; height: 30px; background-color: ${colores.data[i].codigo_hexa}; border: 1px solid #000;"></div>
+                            </td>
+                        </tr>`;
+                }
+            } else {
+                html = `<tr><td colspan="3">No hay colores cargados</td></tr>`;
+            }
+        } catch (e) {
+            html = `<tr><td colspan="3">Error al cargar colores</td></tr>`;
+        }
+        $('#tablaDatosColores tbody').html(html);
+        $('#modalColores').modal('show');
+    }
+
+    const CerrarModalColores = () => {
+        $('#modalColores').modal('hide')
+        // limpiar tabla
+        $('#tablaDatosColores tbody').html('')
+    }
+
+    const modalAccionColor = async(accion, idColor) => {
+        if(accion === 'a'){
+            $('#modalLabelAccionColor').text('Agregar Color')
+            $('#btnaccionColor').attr('onclick', `PostRegistroColor("a", ${idColor})`)
+            $('#btnaccionColor').text('Guardar')
+            // limpiar campos
+            $('#txtDescripcionColor').val('')
+            $('#color').val('#000000')
+        }
+        if(accion === 'm'){
+            let color = await $.post('/productos/getColorByIdAjax', { id: idColor })
+            if(color.status){
+                $('#txtDescripcionColor').val(color.data.descripcion)
+                $('#color').val(color.data.codigo_hexa)
+            }
+            $('#modalLabelAccionColor').text('Modificar Color')
+            $('#btnaccionColor').attr('onclick', `PostRegistroColor("m", ${idColor})`)
+            $('#btnaccionColor').text('Guardar')
+        }
+        $('#modalAccionColor').modal('show')
+    }
+
+    const CerrarModalAccionColor = () => {
+        $('#modalAccionColor').modal('hide')
+        // limpiar campos
+        $('#txtDescripcionColor').val('')
+        $('#color').val('#000000')
+    }
+    
+
+    const PostRegistroColor = async (accion, idColor) => {
+        $("#preloaderAPP").show()
+        let url = '/productos/altaColor',
+            body = {
+                id_producto_fk: _idColorSelec,
+                descripcion: $('#txtDescripcionColor').val(),
+                codigo_hexa: $('#color').val()
+            }
+
+        if (accion === 'm') {
+            url = '/productos/modificarColor'
+            body.id = idColor
+        }
+
+        const res = await $.post(url, body)
+        $("#preloaderAPP").hide()
+        Swal.fire({
+            icon: res.icon,
+            title: res.title, 
+            text: res.text, 
+            timer: 2000
+        }).then(() => {
+            if(res.status){
+                CerrarModalAccionColor()
+                modalColores(_idColorSelec)
+            }
+        })        
+    }
+
+    const EliminarColor = (id) => {
+        Swal.fire({
+            title: 'Confirmar',
+            text: "¿Desea borrar este color?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar.',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar.'
+        }).then(async result => {
+            if (result.isConfirmed) {
+                $("#preloaderAPP").show();
+                let res = await $.post('/productos/eliminarColor', { id })
+                $("#preloaderAPP").hide();
+                Swal.fire({
+                    type: res.type,
+                    icon: res.icon,
+                    title: res.title,
+                    text: res.text,
+                    timer: 2000
+                }).then(() => {
+                    if(res.status){
+                        modalColores(_idColorSelec)
+                    }
+                })
+            }    
+        })
+    }
+
 </script>
+
 {% endblock %}
