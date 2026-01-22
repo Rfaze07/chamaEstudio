@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Basquet La Emilia</title>
+  <title>Chama Estudio Creativo</title>
   <link rel="icon" type="image/png" href="/img/logo-basquet.png">
   <link rel="stylesheet" href="/css/style-panel.css">
     <link rel="stylesheet" href="/css/bootstrap-datepicker.min.css">
@@ -15,395 +15,462 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     
 
-    <style>
-    html, body {
+<style>
+  /* =====================
+   BASE
+   ===================== */
+html, body {
     height: 100%;
     margin: 0;
-    }
+}
 
-    body {
+body {
     display: flex;
     flex-direction: column;
-    }
-    .contenido-principal {
+}
+
+.contenido-principal {
     flex: 1;
-    }
-
-
-    .navbar-portal {
-    position: relative;
-    background-color: #000;
-    padding: 18px 24px;
-    border-bottom: 1px solid #1a1a1a;
-    }
-
-    /* Botón derecha */
-    .btn-gestion {
-    position: absolute;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #fff;
-    }
-
-
-
-    /* Links */
-    .navbar-portal .nav {
-    margin: 0;
-    }
-
-    .navbar-portal .nav-link {
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-    padding: 10px 22px;
-    position: relative;
-    transition: color 0.2s ease;
-    }
-
-    .navbar-portal .nav-link:hover {
-    color: #cfcfcf;
-    }
-
-    /* Activo */
-    .navbar-portal .nav-link.active {
-    font-weight: 600;
-    }
-
-    /* Línea inferior */
-    .navbar-portal .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 2px;
-    width: 0;
-    height: 2px;
-    background-color: #fff;
-    transform: translateX(-50%);
-    transition: width 0.25s ease;
-    }
-
-    .navbar-portal .nav-link:hover::after {
-    width: 55%;
-    }
-
-
-/*--------------------FOOTER----------------*/
-
-
-.footer-portal {
-  background-color: #000;     
-  color: #fff;               
-  padding: 2rem 0 1.5rem;
-  font-size: 14px;
-}
-
-.footer-portal h6 {
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #8a8a8a;
-}
-
-.footer-portal .container > * {
-  margin-bottom: 0.5rem;
-}
-
-/* Contacto */
-.footer-portal .d-flex {
-  margin-top: 0.75rem;
-}
-
-.footer-portal a {
-  color: #b5b5b5;
-  font-size: 20px;
-  margin: 0 14px;               /* separación segura */
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.footer-portal a:hover {
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-/* Derechos */
-.footer-portal p {
-  margin-top: 1.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.footer-portal small {
-  font-size: 12px;
-  color: #7d7d7d;
-}
-.footer-contactos {
-  margin-top: 1rem;
-}
-.footer-contactos {
-  display: flex;
-  justify-content: center;
-}
-
-.contacto-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;        /* espacio icono - texto */
-  margin: 0 15px; /* ← separación ENTRE items */
-  color: #b5b5b5;
-  font-size: 14px;
-}
-
-.contacto-item i {
-  font-size: 18px;
-}
-
-
-
-
-
-
-/* Botón izquierda */
-.btn-inicio {
-  position: absolute;
-  left: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 0;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 8px 14px;
-  color: #fff;
-}
-
-/* =========================
-   RESPONSIVE NAVBAR
-   ========================= */
-@media (max-width: 768px) {
-
-  .navbar-portal {
-    padding: 16px;
-    text-align: center;
-  }
-
-  /* Sacamos posiciones absolutas */
-  .btn-inicio,
-  .btn-gestion {
-    position: static;
-    transform: none;
-    display: inline-block;
-    margin: 8px 0;
-    width: 100%;
-    max-width: 240px;
-  }
-
-  /* Centramos todo */
-  .navbar-portal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Menú en columna */
-  .navbar-portal .nav {
-    flex-direction: column;
-  }
-
-  .navbar-portal .nav-link {
-    padding: 8px 0;
-  }
-
-  /* Línea inferior más corta */
-  .navbar-portal .nav-link::after {
-    bottom: 0;
-  }
-}
-/* TOP BAR */
-.nav-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* HAMBURGUESA */
-.menu-toggle {
-  display: none;
-  background: none;
-  color: #fff;
-  padding: 6px 10px;
-  font-size: 1.1rem;
-}
-
-/* MENU */
-.nav-menu {
-  justify-content: center;
 }
 
 /* =====================
-   MOBILE
+   NAVBAR
    ===================== */
-@media (max-width: 768px) {
+.navbar-ecommerce {
+    background-color: #175676;
+    border-bottom: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    backdrop-filter: blur(6px);
+}
 
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-menu {
-    display: none;
-    flex-direction: column;
-    margin-top: 12px;
-  }
-
-  /* Mostrar menú cuando está activo */
-  .navbar-portal.active .nav-menu {
+.navbar-brand {
     display: flex;
-  }
-
-  .nav-link {
-    padding: 10px 0;
-  }
-
-  .btn-inicio,
-  .btn-gestion {
-    position: static;
-    transform: none;
-  }
+    align-items: center;
+    padding: 0;
 }
-@media (max-width: 768px) {
 
-  .nav-top {
-    flex-direction: row;
-    justify-content: space-between;
+.logo {
+    max-height: 90px;
+    width: auto;
+    height: auto;
+    transform: scale(1.75);  /* lo agranda visualmente */
+}
+
+/* LINKS */
+.nav-link {
+    color: #ffffff;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background-color: #ffffff;
+    transition: all 0.25s ease;
+}
+
+.nav-link:hover::after {
     width: 100%;
-  }
-
-  /* Separación entre elementos */
-  .btn-inicio {
-    margin-right: auto;
-  }
-
-  .menu-toggle {
-    margin: 0 16px;
-  }
-
-  .btn-gestion {
-    margin-left: auto;
-  }
-
-}
-@media (max-width: 768px) {
-
-  .menu-toggle {
-    border-radius: 0;
-    padding: 6px 14px;
-  }
-
-}
-.nav-logo {
-  height: 60px;  
-  width: auto;
 }
 
-  </style>
+/* CENTRO */
+.navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* =====================
+   FILTROS / BUSCADOR
+   ===================== */
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* INPUTS */
+.search-input {
+    height: 40px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: #ffffff;
+    color: #495057;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* SELECT (MISMO ESTILO QUE INPUT) */
+select.search-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 36px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%236c757d' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+}
+
+.filtro-select {
+    min-width: 190px;
+}
+
+/* BUSCADOR + BOTÓN */
+.search-group {
+    display: flex;
+}
+
+.search-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search-btn {
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    background-color: #ffffff;
+    color: #175676;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+.search-btn:hover {
+    background-color: #e6f2f7;
+}
+
+/* =====================
+   ICONOS NAVBAR
+   ===================== */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.icon-btn {
+    color: #ffffff;
+    font-size: 1.4rem;
+    transition: all 0.25s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+}
+
+.icon-btn.admin {
+    opacity: 0.85;
+}
+
+/* =====================
+   HAMBURGUESA
+   ===================== */
+.custom-toggler .navbar-toggler-icon {
+    background-image: none;
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.custom-toggler .navbar-toggler-icon::before,
+.custom-toggler .navbar-toggler-icon::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    left: 0;
+}
+
+.custom-toggler .navbar-toggler-icon::before {
+    top: -7px;
+}
+
+.custom-toggler .navbar-toggler-icon::after {
+    top: 7px;
+}
+
+/* =====================
+   FOOTER
+   ===================== */
+.footer-portal {
+    background-color: #175676;
+    color: #ffffff;
+    box-shadow: inset 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.footer-logo {
+  
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    transform: scale(1.80); 
+}
+
+.footer-title {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-text,
+.footer-contact p {
+    color: #e6f2f7;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #e6f2f7;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    padding-left: 4px;
+}
+
+.footer-contact i {
+    margin-right: 6px;
+}
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding: 1rem 0;
+    font-size: 0.85rem;
+    color: #e6f2f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.footer-dev {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-dev:hover {
+    color: #e6f2f7;
+}
+
+.footer-dev-logo {
+    height: 18px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 991px) {
+    .navbar-center {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .filtros {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-group {
+        width: 100%;
+    }
+
+    .filtro-select {
+        width: 100%;
+    }
+
+    .navbar-right {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
+/* NAV ITEM – mantener blanco en hover */
+.navbar-ecommerce .nav-item .nav-link {
+    color: #ffffff;
+    transition: opacity 0.2s ease;
+}
+
+.navbar-ecommerce .nav-item .nav-link:hover,
+.navbar-ecommerce .nav-item .nav-link:focus,
+.navbar-ecommerce .nav-item .nav-link:active {
+    color: #ffffff !important;
+}
+.navbar-ecommerce .nav-item .nav-link:hover {
+    opacity: 0.85;
+}
+/* NAVBAR RIGHT – iconos siempre blancos */
+.navbar-ecommerce .navbar-right .icon-btn {
+    color: #ffffff;
+    transition: opacity 0.2s ease;
+}
+
+.navbar-ecommerce .navbar-right .icon-btn:hover,
+.navbar-ecommerce .navbar-right .icon-btn:focus,
+.navbar-ecommerce .navbar-right .icon-btn:active {
+    color: #ffffff !important;
+    text-decoration: none;
+}
+.navbar-ecommerce .navbar-right .icon-btn:hover {
+    opacity: 0.8;
+}
+
+
+
+</style>
     {% block styles %}
     {% endblock %}
       
 </head>
 
 <body>
-<nav class="navbar-portal">
+<nav class="navbar navbar-expand-lg navbar-ecommerce sticky-top">
+  <div class="container">
 
-  <!-- Top bar -->
-  <div class="nav-top d-flex align-items-center gap-2">
-
-    <!-- Botón de inicio con imágenes -->
-    <a href="/" class="btn btn-inicio p-0 d-flex align-items-center gap-2">
-      <img src="/img/logo2.png" alt="Inicio" class="nav-logo">
-      <img src="/img/escudo-estrella.png" alt="Escudo" class="nav-logo">
-      <img src="/img/logo-basquet.png" alt="Básquet" class="nav-logo">
+    <!-- LOGO -->
+    <a href="/inicioweb" class="navbar-brand">
+      <img src="/img/logo.png" alt="Inicio" class="logo">
     </a>
 
-    <!-- Botón hamburguesa -->
-    <button class="menu-toggle btn btn-sm" aria-label="Abrir menú">
-      ☰
+    <!-- HAMBURGUESA -->
+    <button class="navbar-toggler custom-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMain">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Botón de gestión -->
-    <a href="/gestion" class="btn btn-gestion">
-      <i class="bi bi-gear-fill fs-4"></i> 
-    </a>
+    <!-- CONTENIDO -->
+    <div class="collapse navbar-collapse" id="navbarMain">
 
-  </div>
+      <!-- CENTRO -->
+      <div class="navbar-center mx-auto">
 
-  <!-- Menú -->
-  <ul class="nav nav-menu">
-    <li class="nav-item">
-      <a class="nav-link active" href="/">Inicio</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/web/noticias">Noticias</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/web/lideres">Líderes</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/web/partidos">Partidos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/web/equipos">Equipos</a>
-    </li>
-  </ul>
+        <ul class="navbar-nav align-items-lg-center gap-lg-4">
 
-</nav>
+          <li class="nav-item">
+            <a class="nav-link" href="/Inicioweb">Inicio</a>
+          </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="/Productos">Productos</a>
+          </li>
 
-<main class="contenido-principal">
-  {% block content %}
-  {% endblock %}
-</main>
+        </ul>
 
+        <!-- BUSCADOR -->
+<div class="filtros">
 
-<footer class="footer-portal">
-  <div class="container text-center">
+    <!-- SELECT -->
+    <select class="search-input filtro-select">
+        <option value="">Todas las categorías</option>
+        <option value="1">Categoría 1</option>
+        <option value="2">Categoría 2</option>
+        <option value="3">Categoría 3</option>
+    </select>
 
-    <!-- Apartado Contacto -->
-    <div class="mb-4">
-      <h6 class="mb-2">Contacto</h6>
-
-<div class="footer-contactos d-flex justify-content-center gap-4">
-
-  <div class="contacto-item">
-    <i class="bi bi-instagram"></i>
-    <span>@le_devs</span>
-  </div>
-
-  <div class="contacto-item">
-    <i class="bi bi-envelope-fill"></i>
-    <span>ledevs27@gmail.com</span>
-  </div>
+    <!-- BUSCADOR + BOTÓN -->
+    <div class="search-group">
+        <input 
+            type="text"
+            class="search-input search-text"
+            placeholder="Buscar..."
+        >
+        <button class="search-btn">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
 
 </div>
 
+      <!-- DERECHA -->
+      <div class="navbar-right">
+        <a href="#" class="icon-btn"><i class="bi bi-handbag"></i></a>
+        <a href="#" class="icon-btn"><i class="bi bi-person-circle"></i></a>
+        <a href="/gestion" class="icon-btn admin"><i class="bi bi-gear-fill"></i></a>
+      </div>
+
     </div>
+  </div>
+</nav>
 
-    <!-- Derechos -->
-    <p class="mb-1">© 2026 Basquet La Emilia</p>
-    <small class="d-block">Desarrollado por LE Devs</small>
-    <small class="d-block">Todos los derechos reservados</small>
 
+
+<!--  --------------------------------  FOOTER ------------------- -->
+<footer class="footer-portal mt-auto">
+  <div class="container py-5">
+    <div class="row gy-4">
+
+      <!-- LOGO / DESCRIPCIÓN -->
+      <div class="col-12 col-md-4 text-center text-md-start">
+        <img src="/img/logo.png" alt="Chama Estudio Creativo"  class="footer-logo mb-3">
+        <p>En Chama, transformamos ideas en diseño innovador. Creatividad y calidad en cada proyecto. ¡Descubre cómo podemos darle vida a tus ideas!</p>
+      </div>
+
+      <!-- LINKS -->
+      <div class="col-6 col-md-4 text-center">
+        <h6 class="footer-title">Navegación</h6>
+        <ul class="footer-links">
+          <li><a href="/Inicioweb">Inicio</a></li>
+          <li><a href="/Productos">Productos</a></li>
+          <li><a href="#">Categorías</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTACTO -->
+      <div class="col-6 col-md-4 text-center text-md-end">
+        <h6 class="footer-title">Contacto</h6>
+        <div class="footer-contact">
+          <p><i class="bi bi-instagram"></i>@Chama_estudio_creativo</p>
+          <p><i class="bi bi-envelope-fill"></i> chama@gmail.com</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PIE INFERIOR -->
+  <div class="footer-bottom text-center">
+    <span>
+      © 2026 · Hecho por <strong>LE Devs</strong> · Todos los derechos reservados
+    </span>
   </div>
 </footer>
-
-
-
-
-
-
+{% block scripts %}
  <script src="/js/jquery.min.js"></script>
   <!-- HIGHCHARTS -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -435,6 +502,8 @@
     <!-- CUSTOM JS -->
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/funcionesSelect.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
   document.querySelector('.menu-toggle')
     .addEventListener('click', () => {
@@ -442,7 +511,7 @@
         .classList.toggle('active');
     });
 </script>
-    {% block scripts %}
+    
     {% endblock %}
 
 </body>
