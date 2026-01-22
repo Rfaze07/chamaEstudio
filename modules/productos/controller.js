@@ -104,3 +104,74 @@ const ValidarCampos = o => {
         return resolve({ status: true })
     })
 }
+
+
+//============================= Colores ============================//
+
+exports.getColoresByProductoIdAjax = async (req, res) => {
+    try {
+        const data = await model.getColoresByProductoId(req.body.id_producto_fk)
+        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen colores cargados para este producto" })
+        return res.json({ status: true, data })
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" })
+    }
+}
+
+exports.getColorByIdAjax = async (req, res) => {    
+    const data = await model.getColorById(req.body.id)
+    if(!data.length) return res.json({ status: false, icon:'error', title: "Error", text: "No existen registros cargados" })
+    res.json({ status: true, data: data[0] })
+}
+
+exports.postAltaColor = async (req, res) => {
+    try {
+        const validaciones = await ValidarCamposColor(req.body)
+        if(!validaciones.status) return res.json(validaciones)
+        let resInsert = await model.insertColor(req.body)
+        if(!resInsert.affectedRows) return res.json({ status: false, icon:"error", title: "Error", text: "Hubo un error al procesar la solicitud" })
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Colores_Productos", acc: "a", registro: resInsert.insertId })
+        res.json({ status: true, icon:"success", title: "Éxito", text: "Solicitud procesada correctamente" })
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: false, icon:'error', title: "Error", text: "Hubo un error al procesar la solicitud" })
+    }
+}
+
+exports.postModificarColor = async (req, res) => {
+    try {
+        const validaciones = await ValidarCamposColor(req.body)
+        if(!validaciones.status) return res.json(validaciones)
+        let result = await model.updateColor(req.body)
+        if(result.affectedRows == 0) return res.json({ status: false, icon:'error', title: "Error", text: "Hubo un error al procesar la solicitud" })
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Colores_Productos", acc: "m", registro: req.body.id }) 
+        return res.json({ status: true, icon: "success", title: "Éxito", text: "Solicitud procesada correctamente" })
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" })
+    }
+}
+
+exports.postEliminarColor = async (req, res) => {
+    try {
+        let result = await model.deleteColor(req.body.id)
+        if(result.affectedRows == 0) return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" })
+        await eventos.insertarEvento({ usuario: req.session.user.id, tabla: "Colores_Productos", acc: "b", registro: req.body.id })            
+        return res.json({ status: true, icon: "success", title: "Éxito", text: "Solicitud procesada correctamente" })
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: false, icon: "error", title: "Error", text: "Hubo un error al procesar la solicitud" })
+    }
+}
+
+const ValidarCamposColor = o => {
+    return new Promise((resolve, reject) => {
+        if(!o.id_producto_fk || o.id_producto_fk == 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe seleccionar un producto' })
+        if(String(o.descripcion).trim().length == 0) return resolve({ status: false, icon:'error', title: 'Error', text: 'Debe ingresar el color' })
+        if(String(o.descripcion).trim().length > 100) return resolve({ status: false, icon:'error', title: 'Error', text: 'El color supera la cantidad permitida' })
+       
+        if(o.codigo_color && String(o.codigo_color).trim().length > 50) return resolve({ status: false, icon:'error', title: 'Error', text: 'El código de color supera la cantidad permitida' })
+        return resolve({ status: true })
+    })
+}

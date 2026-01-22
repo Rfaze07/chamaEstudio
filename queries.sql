@@ -23209,3 +23209,10 @@ INSERT INTO condiciones_iva (id,descripcion,codigo_afip,A_M,B,C,activo,usar_dni)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 ALTER TABLE clientes add COLUMN id_provincia_fk int(11)
+
+create table colores_productos (
+	id int primary key auto_increment,
+	id_producto_fk int(11) not null,
+	descripcion varchar(40) not null,
+	codigo_hexa varchar(50) not null
+)

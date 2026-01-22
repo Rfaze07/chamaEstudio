@@ -11,4 +11,12 @@ router.post('/productos/getByIdAjax', auth, checkAcceso('c'), controller.getById
 router.post('/productos/modificar', auth, checkAcceso('m'), controller.postModificar)
 router.post('/productos/eliminar', auth, checkAcceso('b'), controller.postEliminar)
 
+
+router.post('/productos/getColoresByProductoIdAjax', auth, checkAcceso('c'), controller.getColoresByProductoIdAjax)
+router.post('/productos/getColorByIdAjax', auth, checkAcceso('c'), controller.getColorByIdAjax)
+router.post('/productos/altaColor', auth, checkAcceso('a'), controller.postAltaColor)
+router.post('/productos/modificarColor', auth, checkAcceso('m'), controller.postModificarColor)
+router.post('/productos/eliminarColor', auth, checkAcceso('b'), controller.postEliminarColor)
+
+
 module.exports = router
