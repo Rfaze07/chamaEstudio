@@ -69,8 +69,6 @@
                     <div class="form-group col-sm-12 col-md-12">
                         <label for="id_categoria_fk">Categoría</label>
                         <select class="form-control form-control-sm" id="id_categoria_fk" name="id_categoria_fk">
-                            <option value="">Seleccione una categoría</option>
-                            <!-- Opciones dinámicas -->
                         </select>
                     </div>
                 </div>
@@ -103,17 +101,17 @@
     </div>
 </div>
 
+
+<!--MODAL COLORES-->
+
+
 {% endblock %}
 
 {% block scripts %}
 <script>
 $(document).ready(async () => {
 
-    await ObtenerCmbCategorias('cmbCategoriaFiltro')
-
-    // Agregamos "Todas las categorías" arriba
-    $('#cmbCategoriaFiltro')
-        .prepend('<option value="t">Todas las categorías</option>')
+    await ObtenerCmbCategorias('cmbCategoriaFiltro', true)
 
     $('#cmbCategoriaFiltro').selectpicker('refresh')
 

@@ -44,8 +44,16 @@ exports.getListaAjax = async (req, res) => {
 
 exports.getListaSelectAjax = async (req, res) => {
     try {
-        const data = await model.getAllbyActivo(1)
-        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen rubros cargados" })
+        const { id_categoria_fk } = req.body
+        
+        let data
+        if(id_categoria_fk){
+            data = await model.getByFiltros(1, id_categoria_fk)
+        } else {
+            data = await model.getAllbyActivo(1)
+        }
+        
+        if(!data.length) return res.json({ status: false, icon:"warning", title: "Alerta", text: "No existen subcategorías cargadas" })
         return res.json({ status: true, data })
     } catch (error) {
         console.log(error)
