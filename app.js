@@ -15,8 +15,7 @@ const db = require("./database");
 
 
 app.use(compression());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+
 app.use(
   session({
     name: "sessionCookie$Tp#-agG3eTg7GP0Nq",
@@ -44,7 +43,9 @@ app.use(async function (req, res, next) {
   res.locals.menu = await menues.getMenuHTML();
   next();
 });
-
+// Solo después de las rutas que usan archivos
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // app.use(require("./modules/backup/routes"));
 app.use(require("./modules/programador/routes"));
 app.use(require("./modules/index/routes"));
@@ -52,6 +53,7 @@ app.use(require("./modules/usuarios/routes"));
 app.use(require("./modules/categorias/routes"));
 app.use(require("./modules/subCategorias/routes"));
 app.use(require("./modules/productos/routes"));
+
 app.use(require("./modules/clientes/routes"));
 app.use(require("./modules/tiposDocumentosAfip/routes"));
 
