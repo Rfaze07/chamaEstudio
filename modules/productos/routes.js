@@ -2,6 +2,16 @@ const express = require('express')
 const router = express.Router()
 const controller = require('./controller')
 const { auth, checkAcceso } = require('../../middlewares')
+const upload = require('../multer/controller');
+
+// Middleware de log para diagnóstico de subida de imagen
+function logRequest(req, res, next) {
+	console.log('--- LOG antes de multer ---');
+	console.log('body:', req.body);
+	console.log('file:', req.file);
+	console.log('headers:', req.headers['content-type']);
+	next();
+}
 
 router.get('/productos', auth, checkAcceso('c'), controller.getLista)
 router.post('/productos/getlistaAjax', auth, checkAcceso('c'), controller.getListaAjax)
@@ -10,6 +20,9 @@ router.post('/productos/alta', auth, checkAcceso('a'), controller.postAlta)
 router.post('/productos/getByIdAjax', auth, checkAcceso('c'), controller.getById)
 router.post('/productos/modificar', auth, checkAcceso('m'), controller.postModificar)
 router.post('/productos/eliminar', auth, checkAcceso('b'), controller.postEliminar)
+router.post('/productos/subirImagen', logRequest, upload.single('imagen'), controller.subirImagen);
+// Esta ruta debe ir después de express.urlencoded/json en app.js
+
 
 
 router.post('/productos/getColoresByProductoIdAjax', auth, checkAcceso('c'), controller.getColoresByProductoIdAjax)

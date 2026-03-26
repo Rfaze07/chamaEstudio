@@ -200,6 +200,45 @@
         </div>
     </div>
 
+    <!-- MODAL IMAGEN PRODUCTO -->
+<div class="modal fade" id="modalImagenProducto" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Imagen del Producto</h5>
+                <button type="button" class="close" onclick="CerrarModalImagenProducto()">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="idProductoImagen">
+
+                <div class="form-group">
+                    <label>Seleccionar imagen</label>
+                    <input type="file"
+                           class="form-control-file"
+                           id="imagenProducto"
+                           accept="image/*">
+                </div>
+
+                <div class="text-center mt-3">
+                    <img id="previewImagenProducto"
+                         src=""
+                         class="img-fluid d-none"
+                         style="max-height: 250px; border: 1px solid #ddd;">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="CerrarModalImagenProducto()">Cancelar</button>
+                <button class="btn btn-success" onclick="SubirImagenProducto()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock %}
 
@@ -270,6 +309,12 @@
                                     <button class="btn btn-round btn-sm btn-info" data-accion="m"
                                         data-toggle="tooltip" data-placement="top" title="Colores" onclick="modalColores(${res.data[i].id})">
                                         <i class="fa fa-palette"></i>
+                                    </button>
+                                    <button class="btn btn-round btn-sm btn-secondary"
+                                        data-toggle="tooltip"
+                                        title="Imagen"
+                                        onclick="modalImagenProducto(${res.data[i].id})">
+                                        <i class="fa fa-image"></i>
                                     </button>
                                     <button class="btn btn-round btn-sm btn-warning" data-accion="m"
                                         data-toggle="tooltip" data-placement="top" title="Modificar" onclick="Modalaccion('m',${res.data[i].id})">
@@ -570,6 +615,97 @@
             }    
         })
     }
+
+
+
+    //========================IMAGEN PRODUCTO========================//
+    let _idProductoImagen = null;
+
+const modalImagenProducto = async (idProducto) => {
+    _idProductoImagen = idProducto;
+    $('#idProductoImagen').val(idProducto);
+    $('#imagenProducto').val('');
+    $('#previewImagenProducto').attr('src', '').addClass('d-none');
+
+    $("#preloaderAPP").show();
+
+    try {
+        const res = await $.post('/productos/getImagenProducto', { id: idProducto });
+
+        if (res.status && res.imagen_url) {
+            $('#previewImagenProducto')
+                .attr('src', res.imagen_url)
+                .removeClass('d-none');
+        } else {
+            $('#previewImagenProducto').attr('src', '').addClass('d-none');
+        }
+
+    } catch (e) {
+        console.error(e);
+    }
+
+    $("#preloaderAPP").hide();
+    $('#modalImagenProducto').modal('show');
+};
+
+const CerrarModalImagenProducto = () => {
+    $('#modalImagenProducto').modal('hide');
+};
+
+// Preview
+$('#imagenProducto').on('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        $('#previewImagenProducto')
+            .attr('src', e.target.result)
+            .removeClass('d-none');
+    };
+    reader.readAsDataURL(file);
+});
+
+// Subir imagen
+const SubirImagenProducto = async () => {
+    const file = $('#imagenProducto')[0].files[0];
+    if (!file) {
+        Swal.fire('Atención', 'Seleccione una imagen', 'warning');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('imagen', file);
+    formData.append('id', _idProductoImagen);
+
+    $("#preloaderAPP").show();
+
+    try {
+        const res = await fetch('/productos/subirImagen', {
+            method: 'POST',
+            body: formData
+        }).then(r => r.json());
+
+        $("#preloaderAPP").hide();
+
+        Swal.fire({
+            icon: res.icon,
+            title: res.title,
+            text: res.text,
+            timer: 2000
+        }).then(() => {
+            if (res.status) {
+                CerrarModalImagenProducto();
+                getLista();
+            }
+        });
+
+    } catch (e) {
+        $("#preloaderAPP").hide();
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+    }
+};
+
 
 </script>
 

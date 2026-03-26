@@ -63,6 +63,14 @@ exports.delete = async id => {
     `, [id])
 }
 
+exports.updateImagen = (id, path_foto) => {
+    return queryMYSQL(`
+        UPDATE productos
+        SET path_foto=?
+        WHERE id=?
+    `, [path_foto, id])
+}
+
 
 
 //------------------  COLORES  ------------------//

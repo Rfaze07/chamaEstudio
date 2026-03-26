@@ -1,6 +1,8 @@
 const model = require('./model')
 const utils = require('../../utils')
 const eventos = require("../eventos/controller")
+const cloudinary = require('../cloudinary/controller');
+// const upload = require('../multer/controller');
 
 
 exports.getLista = async (req, res) => {
@@ -175,3 +177,138 @@ const ValidarCamposColor = o => {
         return resolve({ status: true })
     })
 }
+
+
+//============================= Imagen Producto ============================//
+exports.subirImagen = async (req, res) => {
+    try {
+        console.log('subirImagen: body', req.body);
+        console.log('subirImagen: file', req.file);
+        const { id } = req.body;
+
+        const producto = (await model.getById(id))[0];
+        if (!producto) {
+            console.log('subirImagen: producto no encontrado');
+            return res.json({
+                status: false,
+                icon: 'error',
+                title: 'Error',
+                text: 'Producto no encontrado'
+            });
+        }
+
+
+        // ☁ subir nueva imagen
+        if (!req.file || (!req.file.path && !req.file.buffer)) {
+            console.log('subirImagen: archivo no recibido');
+            return res.json({
+                status: false,
+                icon: 'error',
+                title: 'Error',
+                text: 'No se recibió el archivo de imagen'
+            });
+        }
+
+        // 🔥 borrar imagen anterior SOLO si hay archivo nuevo
+        if (producto.path_foto) {
+            try {
+                await cloudinary.uploader.destroy(producto.path_foto);
+                console.log('subirImagen: imagen anterior borrada');
+            } catch (e) {
+                console.error('subirImagen: error al borrar imagen anterior', e);
+            }
+        }
+
+        let result;
+        try {
+            if (req.file && req.file.buffer) {
+                // multer en memoria: usar upload_stream con buffer
+                result = await new Promise((resolve, reject) => {
+                    const stream = cloudinary.uploader.upload_stream(
+                        {
+                            folder: 'catalogo/productos',
+                            public_id: `prod_${producto.id}`
+                        },
+                        (error, response) => {
+                            if (error) return reject(error);
+                            resolve(response);
+                        }
+                    );
+                    stream.end(req.file.buffer);
+                });
+            } else {
+                // fallback: multer con path (archivo en disco)
+                result = await cloudinary.uploader.upload(req.file.path, {
+                    folder: 'catalogo/productos',
+                    public_id: `prod_${producto.id}`
+                });
+            }
+            console.log('subirImagen: imagen subida', result);
+        } catch (e) {
+            console.error('subirImagen: error al subir imagen a cloudinary', e);
+            return res.json({
+                status: false,
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al subir la imagen a Cloudinary'
+            });
+        }
+
+        producto.path_foto = result.public_id;
+        await model.updateImagen(producto.id, producto.path_foto);
+
+        res.json({
+            status: true,
+            icon: 'success',
+            title: 'Correcto',
+            text: 'Imagen actualizada'
+        });
+
+    } catch (err) {
+        console.error('subirImagen: error general', err);
+        res.json({
+            status: false,
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo subir la imagen (error general)'
+        });
+    }
+};
+
+
+exports.getImagenProducto = async (req, res) => {
+    try {
+        console.log('getImagenProducto: req.body', req.body);
+        if (!req.body || typeof req.body.id === 'undefined') {
+            return res.json({ status: false, error: 'ID no recibido' });
+        }
+        const { id } = req.body;
+        const producto = (await model.getById(id))[0];
+        if (!producto) {
+            return res.json({ status: false });
+        }
+        // Construir URL completa si existe path_foto
+        let imagen_url = null;
+        if (producto.path_foto) {
+            try {
+                imagen_url = cloudinary.url(producto.path_foto, {
+                    width: 400,
+                    quality: 'auto',
+                    fetch_format: 'auto',
+                    secure: true
+                });
+            } catch (e) {
+                console.error('getImagenProducto: error al generar url cloudinary', e);
+            }
+        }
+
+        res.json({
+            status: true,
+            imagen: producto.path_foto, // public_id o null
+            imagen_url
+        });
+    } catch (err) {
+        console.error(err);
+        res.json({ status: false });
+    }
+};
