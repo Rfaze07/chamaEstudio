@@ -53,28 +53,15 @@ app.use(require("./modules/usuarios/routes"));
 app.use(require("./modules/categorias/routes"));
 app.use(require("./modules/subCategorias/routes"));
 app.use(require("./modules/productos/routes"));
-
 app.use(require("./modules/clientes/routes"));
 app.use(require("./modules/tiposDocumentosAfip/routes"));
-
 app.use(require("./modules/provincias/routes"));
-app.use(require("./modules/localidades/routes"));
-
-
-
-
-
-app.use(require("./modules/equipos/routes"));
-app.use(require("./modules/jugadores/routes"));
-app.use(require("./modules/partidos/routes"));
-app.use(require("./modules/noticias/routes"));
-
+app.use(require("./modules/localidades/routes"));+
+app.use(require("./modules/mediosPagos/routes"));
 
 app.use(require("./modules/web/index/routes"));
-app.use(require("./modules/web/equipos/routes"));
-app.use(require("./modules/web/partidos/routes"));
-app.use(require("./modules/web/noticias/routes"));
-app.use(require("./modules/web/lideres/routes"));/*aca */
+
+
 
 
 

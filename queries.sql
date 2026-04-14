@@ -23216,3 +23216,11 @@ create table colores_productos (
 	descripcion varchar(40) not null,
 	codigo_hexa varchar(50) not null
 )
+
+--14/04
+ CREATE TABLE nedios_pagos (
+ id int auto_increment primary key,
+ desc_corta varchar(4) not null,
+ descripcion varchar(50) not null,
+ activo tinyint(1) default 1
+ )
