@@ -58,6 +58,10 @@ app.use(require("./modules/tiposDocumentosAfip/routes"));
 app.use(require("./modules/provincias/routes"));
 app.use(require("./modules/localidades/routes"));+
 app.use(require("./modules/mediosPagos/routes"));
+app.use(require("./modules/tipos_materias_primas/routes"));
+app.use(require("./modules/materias_primas/routes"));
+app.use(require("./modules/unmed/routes"));
+
 
 app.use(require("./modules/web/index/routes"));
 

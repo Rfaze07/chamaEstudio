@@ -1145,3 +1145,55 @@ const ObtenerCmbEquipos = (selector, esFiltro) => {
     }
     )
 }
+
+
+const ObtenerCmbTiposMateriasPrimas = (selector, esFiltro) => {
+    return new Promise(async (resolve, reject) => {
+        $("#preloaderAPP").show()
+        const res = await $.post('/tipos_materias_primas/getListaSelectAjax')
+        if(!res.status){
+            $("#preloaderAPP").hide()
+            Swal.fire(res.title, res.text, res.icon)
+            return resolve()
+        }
+        let html = '<option value="" disabled selected>Seleccione una opción...</option>'
+        if(esFiltro) html = '<option value="t" selected>Todos</option>'
+        if(res.data.length > 0){
+            res.data.map(el => {
+                html += `<option value="${el.id}">${el.descripcion}</option>`
+            }
+            )
+        }
+        $(`#${selector}`).html(html)
+        $(`#${selector}`).selectpicker('refresh')
+        if(esFiltro) $(`#${selector}`).selectpicker('val', 't')
+        $("#preloaderAPP").hide()
+        return resolve()
+    }
+    )
+}
+
+const ObtenerCmbUnidadesMedida  = (selector, esFiltro) => {
+    return new Promise(async (resolve, reject) => {
+        $("#preloaderAPP").show()
+        const res = await $.post('/unmed/getlistaSelectAjax')
+        if(!res.status){
+            $("#preloaderAPP").hide()
+            Swal.fire(res.title, res.text, res.icon)
+            return resolve()
+        }
+        let html = '<option value="" disabled selected>Seleccione una opción...</option>'
+        if(esFiltro) html = '<option value="t" selected>Todos</option>'
+        if(res.data.length > 0){
+            res.data.map(el => {
+                html += `<option value="${el.id}">${el.desc_corta} - ${el.descripcion}</option>`
+            })
+        }
+        $(`#${selector}`).html(html)
+        $(`#${selector}`).selectpicker('refresh')
+        if(esFiltro) $(`#${selector}`).selectpicker('val', 't')
+        $("#preloaderAPP").hide()
+        return resolve()
+    }
+    )
+}
