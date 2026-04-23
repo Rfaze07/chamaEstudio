@@ -23224,3 +23224,29 @@ create table colores_productos (
  descripcion varchar(50) not null,
  activo tinyint(1) default 1
  )
+
+ --23/4
+ CREATE TABLE tipos_materias_primas (
+	id int auto_increment primary key,
+	desc_corta varchar(4) not null,
+	descripcion varchar(50),
+	activo tinyint(1) default 1
+);
+
+
+CREATE TABLE materias_primas (
+	id int auto_increment primary key,
+	desc_corta varchar(4) not null,
+	descripcion varchar(50) not null,
+	id_unmed_fk int(11) not null,
+	id_tipo_materia_prima_fk int(11) not null,
+	costo decimal(12,2) default 0,
+	activo tinyint(1) default 1
+);
+
+CREATE TABLE unmed (
+	id int auto_increment primary key,
+	desc_corta varchar(4) not null,
+	descripcion varchar(50),
+	activo tinyint(1) default 1
+);
